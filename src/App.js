@@ -572,6 +572,216 @@ function GamePlay({ persona, onBack }) {
 
 const JOURNEY_ORDER = ["cfo", "corpfpa", "fbp", "analyst", "datareporting", "operator"];
 
+const ORG_SCENARIOS = [
+  {
+    id: "planning-cycle",
+    icon: "◎",
+    title: "Annual Planning Cycle",
+    subtitle: "12 BUs. 6 weeks. The process that eats the quarter — every quarter.",
+    description: "From the CFO setting direction to the analyst building models, every finance role touches the annual plan. See how AI changes each one's part.",
+    roles: {
+      cfo: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The board has asked you to cut the planning cycle time in half and improve the quality of outputs. The current process relies on manual submissions, consolidation, and last-minute cleanup.",
+        prompt: "How do you redesign the planning process?",
+        options: [
+          { label: "Commission a task force to tighten submission timelines and enforce template compliance", type: "old", consequence: "A governance layer on top of a broken process. The cycle is marginally faster. The real bottleneck — manual consolidation — is untouched. You'll have the same conversation next year." },
+          { label: "Redesign from the decision backward: what does the board actually need from the plan, and what system produces it continuously?", type: "new", consequence: "Planning logic is defined once. The AI executes it every cycle. The annual plan becomes a calibration of a live model, not a six-week production event. The board gets better answers faster." }
+        ]
+      },
+      corpfpa: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "13 BU submissions are due in 4 weeks. Based on last year, half will have formula errors, three will miss the deadline, and you'll spend week 5 reconciling conflicting assumptions.",
+        prompt: "How do you set up this year's planning cycle?",
+        options: [
+          { label: "Send the Excel template pack, set the deadline, and prepare to chase from week 3", type: "old", consequence: "Week 5 is a reconciliation war. You rebuild the board deck at 11pm the night before it's due. This is still the most common outcome in finance." },
+          { label: "Push AI-generated base cases to each BU. They adjust assumptions, not structure. Consolidation runs automatically.", type: "new", consequence: "BUs spend time on strategy, not spreadsheet mechanics. Week 6 is reserved for insight and challenge — not cleanup. The cycle ends on schedule with a defensible plan." }
+        ]
+      },
+      fbp: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "Your BU head wants to submit an aggressive growth plan. The underlying assumptions haven't been stress-tested. You have one week before the submission deadline.",
+        prompt: "How do you approach the BU planning conversation?",
+        options: [
+          { label: "Build the plan to their inputs. Add a risk footnote. Submit on time.", type: "old", consequence: "The risk footnote gets ignored. The plan gets approved. You find out it was wrong in the Q2 close — when it's too late to course-correct without a painful conversation." },
+          { label: "Run the AI scenario model. Show exactly what has to be true for their assumptions to hold. Make the challenge the starting point.", type: "new", consequence: "The conversation shifts from opinion to evidence. The plan submitted is actually achievable. Finance earns credibility — not as a gatekeeper, but as a partner who made the plan better." }
+        ]
+      },
+      analyst: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "Six cost centre models need to be built for the plan. Two weeks. The BU submissions are inconsistent and the FBP is already fielding questions from the business.",
+        prompt: "How do you approach the model build?",
+        options: [
+          { label: "Pull actuals from ERP, build each model from scratch in Excel, start with the biggest cost centres", type: "old", consequence: "Two weeks in, three models are done. The remaining three are rough. You miss the submission window for one BU and spend the final days in cleanup mode." },
+          { label: "Use the AI system to generate base cases for all six instantly. Spend the two weeks stress-testing assumptions and building the insight layer.", type: "new", consequence: "All six models are ready by day two. The remaining time goes into insight and challenge. You submit on time with a point of view on each — not just numbers." }
+        ]
+      },
+      datareporting: {
+        involvement: "today-only",
+        involvementNote: "In the AI-native planning cycle, status dashboards and consolidation reports are generated automatically from the live planning model. The manual production work that fills this role's planning cycle largely disappears — freeing it for something more valuable.",
+        scenarioContext: "Every planning cycle you produce a 40-page status dashboard tracking submission progress, variance flags, and consolidation status. It takes a week to build. Leadership glances at it once.",
+        prompt: "Finance leadership asks for a planning cycle status dashboard.",
+        options: [
+          { label: "Build it from scratch using the submitted data. Include every metric. Add filters for BU and cost centre.", type: "old", consequence: "It takes a week. Leadership looks at it once in the first planning review and never opens it again. The same request comes next year." },
+          { label: "Point them to the live planning model view. Configure what they need to see. Redirect your time to the insights the data can't surface automatically.", type: "new", consequence: "The dashboard runs itself from now on. You've freed up a week of production time and redirected it to the editorial work — signal identification and narrative framing — that actually requires judgment." }
+        ]
+      },
+      operator: {
+        involvement: "future-only",
+        involvementNote: "This role doesn't exist in today's planning cycle. That's part of why the cycle is broken — nobody owns the AI infrastructure that would make the whole process reliable.",
+        scenarioContext: "In the AI-native org, you maintain the models and data pipelines that every other role depends on during the planning cycle. You prevent problems before they happen.",
+        prompt: "Three BUs are using outdated revenue assumptions in the planning model. The data hasn't been refreshed in two quarters.",
+        options: [
+          { label: "Wait for the BUs to flag it in their submissions — it's their data responsibility", type: "old", consequence: "The model produces a plan built on stale assumptions. Nobody finds out until the Q2 forecast diverges significantly. By then, capital has already been misallocated." },
+          { label: "Proactively identify the gap, flag it to the relevant FBPs, and update the training data before the planning window opens", type: "new", consequence: "The planning model is reliable from day one. Every role downstream works from accurate data. You've prevented a problem nobody knew was coming — and nobody would have thanked you for missing." }
+        ]
+      }
+    }
+  },
+  {
+    id: "board-pack",
+    icon: "▦",
+    title: "Quarterly Board Pack",
+    subtitle: "90 pages. 3 decisions the board needs to make. Finding them is the job.",
+    description: "The most visible output finance produces. See how each role's contribution changes when the pack is built around decisions, not data.",
+    roles: {
+      cfo: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The board has told you — again — that the pack is too long, too backward-looking, and doesn't help them make decisions. This is the third consecutive quarter with the same feedback.",
+        prompt: "How do you respond?",
+        options: [
+          { label: "Ask the team to cut 20 pages and simplify the charts. Set a 70-page cap going forward.", type: "old", consequence: "You get a shorter version of the same thing. Less data is not more insight. The feedback comes again next quarter, verbatim." },
+          { label: "Reframe the pack entirely around the three decisions the board needs to make this quarter. Every page earns its place.", type: "new", consequence: "The board finishes in 90 minutes instead of three hours. Two decisions get made in the room. You've changed what the board pack is for — not just how long it is." }
+        ]
+      },
+      corpfpa: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The board pack is due in 5 days. Three BUs haven't submitted their commentary. Two that have submitted need significant revisions.",
+        prompt: "How do you handle the missing and incomplete commentary?",
+        options: [
+          { label: "Chase the BUs. Hold the pack. Push the deadline if needed.", type: "old", consequence: "The pack goes out late. The board receives it the morning of the meeting. Two members haven't read it. The CFO is frustrated and the process looks broken." },
+          { label: "Generate AI commentary from each BU's actuals and variance data. Send it to BUs for review and approval — not for drafting from scratch.", type: "new", consequence: "BUs review and approve in hours rather than days. The pack goes out 48 hours early. The board arrives prepared. The process is no longer held hostage by the slowest BU." }
+        ]
+      },
+      fbp: {
+        involvement: "today-only",
+        involvementNote: "In the reimagined org, BU commentary for the board pack is generated automatically from live actuals and reviewed by the FBP — not drafted from scratch each quarter. The role shifts from author to editor to strategist.",
+        scenarioContext: "Today, writing the BU section of the board pack takes two full days every quarter. You pull data from four systems, format it to the template, and draft commentary that is mostly descriptive.",
+        prompt: "Your BU's board section needs to be drafted for this quarter.",
+        options: [
+          { label: "Write the commentary from scratch. Pull the data. Format to the template. Submit.", type: "old", consequence: "Two days of production work. Half of it is data description that could have been auto-generated. You're a formatting service, not a strategic voice in the board narrative." },
+          { label: "Review and sharpen the AI-generated commentary. Add the context and strategic framing only you have. Submit in two hours.", type: "new", consequence: "The section is better than anything written from scratch in two days. You've spent your time on the 20% that required judgment — not the 80% that didn't." }
+        ]
+      },
+      analyst: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The CFO wants a sensitivity analysis on three strategic scenarios for the board meeting: base case, macro headwind, and accelerated investment. You have three days.",
+        prompt: "How do you build the sensitivity analysis?",
+        options: [
+          { label: "Build three separate models. Run the scenarios. Compile the outputs into a single comparison table.", type: "old", consequence: "Three days of model building. They aren't fully linked. One scenario has an error the CFO catches in the pre-read. Trust in the numbers takes a hit at the worst moment." },
+          { label: "Configure the AI scenario engine. Define the variables, stress-test the logic, own the interpretation.", type: "new", consequence: "Three scenarios modelled in an afternoon. You spend the remaining time on what they mean — and walk into the CFO review with a recommendation, not just a table." }
+        ]
+      },
+      datareporting: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "You build the board pack — 90 pages, every quarter, on a tight deadline. It's the most visible thing finance produces. And the CFO has just said it's not working.",
+        prompt: "The CFO says the pack has too much data and not enough insight. Again. How do you respond?",
+        options: [
+          { label: "Cut 20 pages. Simplify the charts. Submit a cleaner version of the same structure.", type: "old", consequence: "Shorter data is still data. The CFO gives the same feedback next quarter. You've optimised the production — you haven't changed what it produces." },
+          { label: "Rebuild the pack around the three decisions the board needs to make. Every chart earns its place. AI handles the data — you handle the story.", type: "new", consequence: "The board pack becomes a decision document. The CFO shares it as a best-practice example internally. You've changed the format and the function of the role — not just the page count." }
+        ]
+      },
+      operator: {
+        involvement: "future-only",
+        involvementNote: "Today the board pack relies on manual data pulls from multiple systems, at least two of which have known quality issues that get worked around every quarter. In the reimagined org, you've eliminated the pulls and the risk.",
+        scenarioContext: "You maintain the data pipelines that feed the board pack automatically. One core feed has been producing inconsistent outputs for two months. Everyone knows about it. Nobody has fixed it.",
+        prompt: "A data feed for the board pack has had a known quality issue for two months.",
+        options: [
+          { label: "Log it as a known issue. Work around it manually each month. Note it in the commentary.", type: "old", consequence: "The workaround becomes permanent. Everyone knows the number is approximate but the pack goes out anyway. Trust in the data erodes quietly until a board member questions a figure in the room." },
+          { label: "Trace the root cause. Fix the pipeline. Document the fix and add a monitoring alert so it can't quietly drift again.", type: "new", consequence: "The issue is resolved permanently. The board pack is clean. You've removed a recurring risk that nobody was formally accountable for — and that was one bad quarter away from a governance problem." }
+        ]
+      }
+    }
+  },
+  {
+    id: "product-launch",
+    icon: "◆",
+    title: "New Product Launch Evaluation",
+    subtitle: "The business wants to move fast. Finance needs to give them a reason to — or a reason not to.",
+    description: "A high-stakes, time-compressed decision that touches every layer of the finance org. See who leads, who enables, and whose role barely exists until now.",
+    roles: {
+      cfo: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The CEO wants a go/no-go recommendation on a new product line. 10 days. Significant capital implications. The business is confident. You haven't seen the numbers yet.",
+        prompt: "How do you approach the evaluation?",
+        options: [
+          { label: "Mobilise the team. Pull comps. Start building the model. Coordinate with the business and external advisors.", type: "old", consequence: "Day 10 you have a financial model. The strategic thesis was shaped without finance in the room early enough. You're a scorekeeper who arrived late — not a partner who shaped the decision." },
+          { label: "Deploy AI scenario modeling in hour one. Spend the 10 days stress-testing the strategic thesis with the CEO — not building the spreadsheet.", type: "new", consequence: "Finance shapes the deal logic from day one. You identify a structural risk the business hadn't modelled. The board sees the CFO as the person who makes decisions sharper, not just the person who prices them." }
+        ]
+      },
+      corpfpa: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The new product launch will require significant capital reallocation across the existing portfolio. Three other investment commitments are in flight. Nobody has flagged the portfolio-level conflict yet.",
+        prompt: "How do you assess the portfolio impact?",
+        options: [
+          { label: "Run the standard capital allocation model. Flag the reallocation in the next planning cycle review.", type: "old", consequence: "By the time the reallocation shows up in the plan, two other investments have already been committed. The portfolio is over-allocated. The CFO is managing a problem that could have been avoided." },
+          { label: "Run the AI portfolio model in real time. Show exactly what this launch displaces and what the true opportunity cost is — before the decision is made.", type: "new", consequence: "The capital conversation happens before the commitment, not after. The portfolio stays balanced. Finance is in the room when the decision is made — not explaining the consequences after the fact." }
+        ]
+      },
+      fbp: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "Your BU head wants to launch. They're confident on the commercial side. You have 48 hours to produce a credible business case before the CFO review.",
+        prompt: "How do you approach the 48-hour ask?",
+        options: [
+          { label: "Build a standard 3-statement model. Pull comps manually. Produce a financial summary.", type: "old", consequence: "48 hours produces a skeleton model with untested assumptions. The BU head senses you're not really in the business. Finance is a compliance step, not a decision partner." },
+          { label: "Use AI to generate base case financials instantly. Spend the 48 hours stress-testing assumptions with the business. Deliver a recommendation with conviction.", type: "new", consequence: "You deliver a fully scenario-tested business case with a clear go/no-go recommendation. Not just numbers — a decision with a point of view. Finance earns its seat at the strategy table." }
+        ]
+      },
+      analyst: {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The product launch needs three financial scenarios modelled before the CFO review: base case, optimistic, and downside. The FBP needs them by end of day tomorrow.",
+        prompt: "How do you build the scenario analysis?",
+        options: [
+          { label: "Build each scenario as a separate model. Link the key drivers manually. Compile the comparison outputs.", type: "old", consequence: "It takes two full days. The models drift apart by the third revision. When the BU changes a pricing assumption, you update each model separately. Something slips." },
+          { label: "Build one connected scenario engine. Define the key variables. Run all three scenarios while you focus on the interpretation.", type: "new", consequence: "Three scenarios are live in an afternoon. When the BU changes a pricing assumption, all three update instantly. You spend your time on what it means — not on rebuilding the same model three times." }
+        ]
+      },
+      datareporting: {
+        involvement: "future-only",
+        involvementNote: "In today's org, this role isn't meaningfully involved in a product launch evaluation. In the reimagined org, the Insight Designer builds the KPI framework that determines whether the launch actually works — before it launches.",
+        scenarioContext: "The launch has been approved. In the AI-native org, your role isn't reporting after the fact — it's designing the measurement framework before launch so the right signals are tracked from day one.",
+        prompt: "The product launch is approved. Finance needs to track its performance.",
+        options: [
+          { label: "Set up a standard monthly reporting dashboard using the existing revenue and margin metrics.", type: "old", consequence: "Month 3, the dashboard shows the product hitting revenue targets. Nobody notices it's destroying margin on a key customer segment. The metrics tracked the wrong things." },
+          { label: "Design the KPI framework before launch. Define what 'working' means across revenue, margin, and customer behaviour. Build the AI alert layer on top.", type: "new", consequence: "When a pricing issue appears in month 2, the alert fires before it compounds. Finance catches it while it's still correctable. The KPI framework becomes the source of truth for the entire launch team." }
+        ]
+      },
+      operator: {
+        involvement: "future-only",
+        involvementNote: "This role doesn't exist in today's product launch evaluation — so each analyst builds their own model in isolation and the outputs are compared manually. In the reimagined org, you make the entire evaluation possible at speed.",
+        scenarioContext: "The FBP, the analyst, and the CFO are all running scenarios for the evaluation. In the AI-native org, they're all working from the same central model — which you built, maintain, and keep aligned with the latest business inputs.",
+        prompt: "The business wants to model 5 pricing scenarios before the launch decision.",
+        options: [
+          { label: "Each analyst builds their own version. Outputs are compared manually in a shared spreadsheet.", type: "old", consequence: "Five different models. Three different answers. The CFO asks which one to trust. Nobody is certain. The evaluation loses credibility at the moment it matters most." },
+          { label: "Build one central scenario model with clean, governed inputs. Every role runs their analysis from the same source of truth.", type: "new", consequence: "All five scenarios run in under an hour. Every stakeholder works from identical assumptions. The decision is made with clarity — not in spite of the models, but because of them." }
+        ]
+      }
+    }
+  }
+];
+
 function JourneyBanner({ onStart }) {
   const [hov, setHov] = useState(false);
   return (
@@ -589,10 +799,10 @@ function JourneyBanner({ onStart }) {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: hov ? "linear-gradient(90deg, #C8A96E, #5BC8A0, #A78BDB, #7EB8D4)" : "transparent", transition: "all 0.22s" }} />
       <div style={{ display: "flex", gap: "18px", alignItems: "center", flexWrap: "wrap" }}>
         <div style={{ flex: 1, minWidth: "220px" }}>
-          <div style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,0.35)", fontWeight: "700", marginBottom: "7px" }}>NEW · WALK THE FULL ORG</div>
+          <div style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,0.35)", fontWeight: "700", marginBottom: "7px" }}>WALK THE FULL ORG</div>
           <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", color: "#fff", marginBottom: "6px" }}>The Org Journey</div>
           <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.42)", lineHeight: "1.65" }}>
-            Walk every role — one at a time. See each role's responsibilities, inputs, outputs, and how AI is changing what it means to do the job. Then face the decision.
+            Pick a scenario — planning cycle, board pack, or product launch. Walk every role through their part in it. Some are central. Some are being designed away. One doesn't exist yet.
           </div>
         </div>
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "10px", flexShrink: 0 }}>
@@ -611,7 +821,87 @@ function JourneyBanner({ onStart }) {
   );
 }
 
-function JourneyDone({ choices, onBack, onRestart }) {
+function ScenarioSelector({ onSelect, onBack }) {
+  return (
+    <div style={{ animation: "fadeUp 0.5s ease" }}>
+      <button onClick={onBack} style={backBtn}>← Home</button>
+      <div style={{ marginBottom: "36px" }}>
+        <div style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", marginBottom: "10px" }}>THE ORG JOURNEY</div>
+        <h2 style={{ fontFamily: "'Playfair Display', serif", fontSize: "28px", color: "#fff", marginBottom: "12px", lineHeight: "1.2" }}>Choose a scenario</h2>
+        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", lineHeight: "1.75", maxWidth: "520px" }}>
+          Each scenario walks every role through their part in the same situation. Some roles are central. Some are being designed away. One doesn't exist yet.
+        </p>
+      </div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+        {ORG_SCENARIOS.map(scenario => (
+          <ScenarioCard key={scenario.id} scenario={scenario} onSelect={onSelect} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ScenarioCard({ scenario, onSelect }) {
+  const [hov, setHov] = useState(false);
+  const involvementColor = { both: null, "today-only": "#E8C84A", "future-only": "#7EB8D4" };
+  return (
+    <div
+      onClick={() => onSelect(scenario)}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        cursor: "pointer", borderRadius: "14px", padding: "22px 24px",
+        background: hov ? "rgba(255,255,255,0.05)" : "rgba(255,255,255,0.025)",
+        border: `1px solid ${hov ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.08)"}`,
+        transition: "all 0.22s", position: "relative", overflow: "hidden"
+      }}
+    >
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: hov ? "rgba(255,255,255,0.2)" : "transparent", transition: "all 0.22s" }} />
+      <div style={{ display: "flex", gap: "18px", alignItems: "flex-start", flexWrap: "wrap" }}>
+        <div style={{ fontSize: "32px", color: "rgba(255,255,255,0.5)", flexShrink: 0, marginTop: "2px" }}>{scenario.icon}</div>
+        <div style={{ flex: 1, minWidth: "200px" }}>
+          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "19px", color: "#fff", marginBottom: "4px" }}>{scenario.title}</div>
+          <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.38)", marginBottom: "10px", lineHeight: "1.55" }}>{scenario.subtitle}</div>
+          <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: "1.65" }}>{scenario.description}</div>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-end", gap: "10px", flexShrink: 0 }}>
+          <div style={{ display: "flex", gap: "5px" }}>
+            {JOURNEY_ORDER.map(id => {
+              const p = PERSONAS.find(x => x.id === id);
+              const roleData = scenario.roles[id];
+              const iColor = involvementColor[roleData.involvement];
+              return (
+                <div key={id} title={`${p.title} · ${roleData.involvement}`} style={{
+                  width: "24px", height: "24px", borderRadius: "6px",
+                  background: iColor ? `${iColor}18` : `${p.color}18`,
+                  border: `1px solid ${iColor ? iColor + "50" : p.color + "40"}`,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: "12px",
+                  color: iColor || p.color,
+                  opacity: roleData.involvement === "both" ? 1 : 0.6,
+                }}>{p.icon}</div>
+              );
+            })}
+          </div>
+          <div style={{ display: "flex", gap: "10px", fontSize: "9px", color: "rgba(255,255,255,0.3)" }}>
+            {["both", "today-only", "future-only"].map(type => {
+              const count = JOURNEY_ORDER.filter(id => scenario.roles[id].involvement === type).length;
+              if (!count) return null;
+              const label = type === "both" ? "active" : type === "today-only" ? "fading" : "new";
+              const color = type === "both" ? "rgba(255,255,255,0.4)" : type === "today-only" ? "#E8C84A" : "#7EB8D4";
+              return <span key={type} style={{ color }}>{count} {label}</span>;
+            })}
+          </div>
+          <div style={{ fontSize: "11px", color: hov ? "#fff" : "rgba(255,255,255,0.3)", letterSpacing: "0.8px", fontWeight: "700", transition: "color 0.22s" }}>
+            START →
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function JourneyDone({ choices, scenario, onBack, onRestart }) {
   const score = choices.filter(c => c.type === "new").length;
   const gradeInfo = score >= 5
     ? { label: "AI-NATIVE ORG", color: "#5BC8A0", msg: "This finance org is moving together. Leadership, planning, partnering, analysis, insight, and infrastructure are all aligned around the same AI-native model. This is what transformation actually looks like." }
@@ -624,7 +914,8 @@ function JourneyDone({ choices, onBack, onRestart }) {
   return (
     <div style={{ animation: "fadeUp 0.5s ease" }}>
       <div style={{ textAlign: "center", padding: "16px 0 36px" }}>
-        <div style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", marginBottom: "14px" }}>ORG JOURNEY COMPLETE</div>
+        <div style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", marginBottom: "6px" }}>ORG JOURNEY COMPLETE</div>
+        {scenario && <div style={{ fontSize: "13px", color: "rgba(255,255,255,0.4)", marginBottom: "14px" }}>{scenario.icon} {scenario.title}</div>}
         <span style={{ fontSize: "10px", letterSpacing: "2.5px", fontWeight: "800", color: gradeInfo.color, background: `${gradeInfo.color}15`, border: `1px solid ${gradeInfo.color}40`, borderRadius: "6px", padding: "6px 16px", display: "inline-block", marginBottom: "16px" }}>{gradeInfo.label}</span>
         <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "26px", color: "#fff", marginBottom: "10px" }}>{score}/6 AI-native decisions</div>
         <p style={{ color: "rgba(255,255,255,0.42)", maxWidth: "500px", margin: "0 auto", lineHeight: "1.7", fontSize: "14px" }}>{gradeInfo.msg}</p>
@@ -667,6 +958,7 @@ function JourneyDone({ choices, onBack, onRestart }) {
 }
 
 function OrgJourney({ onBack }) {
+  const [scenario, setScenario] = useState(null);
   const [roleIdx, setRoleIdx] = useState(0);
   const [phase, setPhase] = useState("overview"); // "overview" | "decision"
   const [chosen, setChosen] = useState(null);
@@ -674,9 +966,17 @@ function OrgJourney({ onBack }) {
   const [allChoices, setAllChoices] = useState([]);
   const [journeyDone, setJourneyDone] = useState(false);
 
+  // Show scenario picker first
+  if (!scenario) {
+    return <ScenarioSelector onSelect={setScenario} onBack={onBack} />;
+  }
+
   const persona = PERSONAS.find(p => p.id === JOURNEY_ORDER[roleIdx]);
-  const step = persona.steps[0];
+  const roleData = scenario.roles[persona.id];
+  const step = { prompt: roleData.prompt, options: roleData.options };
   const lastChoice = allChoices[allChoices.length - 1];
+  const involvementColors = { "today-only": "#E8C84A", "future-only": "#7EB8D4" };
+  const involvementLabels = { "today-only": "ROLE FADING IN AI STATE", "future-only": "NET NEW IN AI STATE" };
 
   const handleChoice = (type, idx) => {
     if (chosen !== null) return;
@@ -704,21 +1004,27 @@ function OrgJourney({ onBack }) {
   };
 
   const restart = () => {
-    setRoleIdx(0); setPhase("overview"); setChosen(null);
+    setScenario(null); setRoleIdx(0); setPhase("overview"); setChosen(null);
     setShowConsequence(false); setAllChoices([]); setJourneyDone(false);
   };
 
   if (journeyDone) {
-    return <JourneyDone choices={allChoices} onBack={onBack} onRestart={restart} />;
+    return <JourneyDone choices={allChoices} scenario={scenario} onBack={onBack} onRestart={restart} />;
   }
 
   const nextPersona = PERSONAS.find(p => p.id === JOURNEY_ORDER[roleIdx + 1]);
 
   return (
     <div style={{ animation: "fadeUp 0.4s ease" }}>
-      <button onClick={onBack} style={backBtn}>← Home</button>
+      <button onClick={() => setScenario(null)} style={backBtn}>← Scenarios</button>
 
-      {/* Progress bar: 6 segments, one per role */}
+      {/* Scenario label */}
+      <div style={{ display: "flex", gap: "8px", alignItems: "center", marginBottom: "14px" }}>
+        <span style={{ fontSize: "13px", color: "rgba(255,255,255,0.25)" }}>{scenario.icon}</span>
+        <span style={{ fontSize: "11px", color: "rgba(255,255,255,0.28)", letterSpacing: "0.5px" }}>{scenario.title}</span>
+      </div>
+
+      {/* Progress bar: 6 segments */}
       <div style={{ display: "flex", gap: "5px", marginBottom: "10px" }}>
         {JOURNEY_ORDER.map((id, i) => {
           const p = PERSONAS.find(x => x.id === id);
@@ -738,6 +1044,18 @@ function OrgJourney({ onBack }) {
       {/* ── OVERVIEW PHASE ── */}
       {phase === "overview" && (
         <div style={{ animation: "fadeUp 0.4s ease" }}>
+          {/* Involvement note */}
+          {roleData.involvement !== "both" && (
+            <div style={{
+              padding: "12px 16px", borderRadius: "10px", marginBottom: "20px",
+              background: `${involvementColors[roleData.involvement]}10`,
+              border: `1px solid ${involvementColors[roleData.involvement]}35`,
+            }}>
+              <div style={{ fontSize: "8px", letterSpacing: "1.5px", fontWeight: "700", color: involvementColors[roleData.involvement], marginBottom: "5px" }}>{involvementLabels[roleData.involvement]}</div>
+              <div style={{ fontSize: "12px", color: "rgba(255,255,255,0.5)", lineHeight: "1.6" }}>{roleData.involvementNote}</div>
+            </div>
+          )}
+
           {/* Role header */}
           <div style={{ display: "flex", gap: "14px", alignItems: "center", marginBottom: "20px" }}>
             <div style={{ width: "52px", height: "52px", borderRadius: "13px", flexShrink: 0, background: `${persona.color}18`, border: `1px solid ${persona.color}45`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "24px", color: persona.color }}>{persona.icon}</div>
@@ -747,8 +1065,9 @@ function OrgJourney({ onBack }) {
             </div>
           </div>
 
+          {/* Scenario-specific context for this role */}
           <p style={{ fontSize: "14px", color: "rgba(255,255,255,0.5)", lineHeight: "1.72", marginBottom: "26px", paddingLeft: "14px", borderLeft: `2px solid ${persona.color}40` }}>
-            {persona.hook}
+            {roleData.scenarioContext}
           </p>
 
           {/* Responsibilities / Inputs / Outputs */}
@@ -805,6 +1124,19 @@ function OrgJourney({ onBack }) {
       {/* ── DECISION PHASE ── */}
       {phase === "decision" && (
         <div style={{ animation: "fadeUp 0.4s ease" }}>
+          {/* Involvement note (compact) */}
+          {roleData.involvement !== "both" && (
+            <div style={{
+              padding: "10px 14px", borderRadius: "8px", marginBottom: "18px",
+              background: `${involvementColors[roleData.involvement]}10`,
+              border: `1px solid ${involvementColors[roleData.involvement]}30`,
+              fontSize: "11px", color: involvementColors[roleData.involvement], lineHeight: "1.55"
+            }}>
+              <span style={{ fontWeight: "700", letterSpacing: "0.5px" }}>{involvementLabels[roleData.involvement]} · </span>
+              {roleData.involvementNote}
+            </div>
+          )}
+
           {/* Compact role header */}
           <div style={{ display: "flex", gap: "12px", alignItems: "center", marginBottom: "22px" }}>
             <div style={{ width: "36px", height: "36px", borderRadius: "9px", flexShrink: 0, background: `${persona.color}18`, border: `1px solid ${persona.color}40`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "16px", color: persona.color }}>{persona.icon}</div>
@@ -816,8 +1148,8 @@ function OrgJourney({ onBack }) {
 
           {/* Scenario context */}
           <div style={{ padding: "14px 18px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", marginBottom: "20px" }}>
-            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.28)", letterSpacing: "1px", marginBottom: "6px" }}>SCENARIO</div>
-            <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.72)", lineHeight: "1.65" }}>{persona.challenge}</div>
+            <div style={{ fontSize: "9px", color: "rgba(255,255,255,0.28)", letterSpacing: "1px", marginBottom: "6px" }}>SITUATION</div>
+            <div style={{ fontSize: "14px", color: "rgba(255,255,255,0.72)", lineHeight: "1.65" }}>{roleData.scenarioContext}</div>
           </div>
 
           <h3 style={{ fontFamily: "'Playfair Display', serif", fontSize: "20px", color: "#fff", marginBottom: "22px", lineHeight: "1.4" }}>
