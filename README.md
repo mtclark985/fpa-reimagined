@@ -1,5 +1,7 @@
 # FP&A Reimagined
 
+**[Live Demo →](https://fpa-reimagined.vercel.app)**
+
 An interactive React demo built for internal change management. The goal is to shift colleagues away from thinking about AI as a chatbot bolted onto existing processes, toward completely reimagining workflows, org structures, and the skills and responsibilities that define each finance role.
 
 ---
