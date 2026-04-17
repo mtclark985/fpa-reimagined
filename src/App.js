@@ -1,264 +1,482 @@
 import { useState, useEffect } from "react";
 
 const PERSONAS = [
+  // ── COE ROLES ──────────────────────────────────────────────────────────────
   {
-    id: "analyst",
-    icon: "◈",
-    tag: "EVOLVING ROLE",
-    tagColor: "#C8A96E",
-    color: "#C8A96E",
-    title: "FP&A Analyst",
-    futureTitle: "Strategic Finance Partner",
-    hook: "Spends 70% of their week gathering data. Rarely has time to think.",
-    futureHook: "AI handles the gathering. They own the thinking, the story, the recommendation.",
-    timeLabels: ["Data wrangling", "Building decks", "Analysis", "Strategic advisory"],
-    timeBefore: [65, 20, 10, 5],
-    timeAfter: [8, 12, 45, 35],
-    beforeSkills: ["Advanced Excel / VBA", "Month-end close", "Variance commentary", "Manual ERP pulls", "Budget consolidation", "Slide building"],
-    afterSkills: ["AI output interpretation", "Business storytelling", "Scenario design", "Cross-functional influence", "Decision framing", "Financial narrative"],
-    challenge: "Q3 forecast due Friday. Revenue tracking 8% below plan. Leadership wants answers.",
+    id: "sr-director",
+    icon: "✦",
+    tag: "COE LEADER",
+    tagColor: "#5BC8A0",
+    color: "#5BC8A0",
+    title: "Sr. Director, Analytics",
+    futureTitle: "Sr. Director, Analytics",
+    hook: "Analytics scattered across every team. No shared roadmap, no standards, no one accountable for the whole.",
+    futureHook: "Owns the CoE strategy and roadmap. Turns fragmented capability into a unified competitive advantage.",
+    timeLabels: ["Stakeholder alignment", "Roadmap & strategy", "Standards & governance", "Adoption & enablement"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [25, 30, 20, 25],
+    beforeSkills: ["❌ Role didn't exist", "Analytics owned by IT", "No shared roadmap", "Tool sprawl & duplication", "No investment thesis", "Tribal knowledge only"],
+    afterSkills: ["Analytics roadmap ownership", "Investment prioritization", "Stakeholder alignment", "Standards-setting", "Adoption & change management", "CoE capability building"],
+    challenge: "You've been handed 14 analytics tools, 6 conflicting revenue definitions, and zero shared roadmap. Leadership wants a 90-day plan.",
     steps: [
       {
-        prompt: "Your first move on a tight deadline?",
+        prompt: "Where do you start?",
         options: [
-          { label: "Pull 3 years of actuals from ERP, start building the Excel model from scratch", type: "old", consequence: "Three days of data wrangling. Numbers ready Friday, but no time for insight. You're a data courier, not an advisor." },
-          { label: "Query the AI forecasting system with live signals. Define the strategic questions first.", type: "new", consequence: "Model runs in 20 minutes. You spend the week on what it means, not what the numbers are. You arrive with a point of view." }
+          { label: "Audit every tool. Build a consolidation plan. Present it to leadership.", type: "old", consequence: "You spend 90 days cataloguing the mess. The real problem — no shared definition of what the analytics org is supposed to enable — goes unaddressed." },
+          { label: "Map the decisions that matter most to the business. Work backward to what data and models need to exist.", type: "new", consequence: "The roadmap is grounded in business value from day one. Every CoE investment traces to a decision the business needs to make better." }
         ]
       },
       {
-        prompt: "AI flags EMEA deals slipping into Q4. What do you do?",
+        prompt: "Two BU heads want custom analytics solutions built exclusively for their teams.",
         options: [
-          { label: "Add a footnote to the variance slide explaining the timing shift", type: "old", consequence: "CFO asks 'so what?' in the review. You don't have an answer prepared. You've described the problem, not solved it." },
-          { label: "Run three scenarios, quantify Q4 pull-through risk, prep a clear recommendation", type: "new", consequence: "You walk into the review owning the narrative. CFO asks you to join the board prep call. You're not a reporter — you're an advisor." }
+          { label: "Scope and build each one. Add them to the CoE roadmap as BU-specific workstreams.", type: "old", consequence: "You build two custom solutions. Three more BUs ask for the same. The CoE becomes a custom dev shop. Scalability never arrives." },
+          { label: "Identify the shared underlying need. Build one scalable product that serves both — and every future BU.", type: "new", consequence: "One solution ships in the time it would have taken to build one custom tool. The two BUs adopt it. Four more BUs onboard the following quarter. This is what a CoE is for." }
         ]
       },
       {
-        prompt: "Leadership asks: cut headcount or protect investment?",
+        prompt: "CoE dashboard adoption is at 20% three months after launch. Leadership is losing confidence.",
         options: [
-          { label: "Share the variance report and let leadership make the call", type: "old", consequence: "You're a data provider. The decision happens around you, not with you. Finance is peripheral." },
-          { label: "Model NPV of both paths against strategic priorities. Make a recommendation with conviction.", type: "new", consequence: "You're a decision partner. You're in the room where it happens. This is what the role becomes." }
+          { label: "Run a training program. Send how-to guides to every team.", type: "old", consequence: "Attendance is low. Guides go unread. The problem wasn't knowledge — it was that the product didn't fit the workflow. You trained people for a tool they won't use." },
+          { label: "Embed with the two lowest-adoption BUs. Diagnose the friction. Fix the product — not the users.", type: "new", consequence: "Two changes to the dashboard solve 80% of the adoption blockers. Adoption hits 70% the following month. The CoE earns a reputation for building things people actually use." }
         ]
       }
     ],
-    responsibilities: ["Forecasting & scenario modeling", "Variance & root-cause analysis", "Decision support for leadership", "Financial narrative & storytelling"],
-    inputs: ["ERP & live system data", "AI forecasting model outputs", "Business context from Finance BPs", "Leadership questions & decisions"],
-    outputs: ["Forecasts with scenario ranges", "Variance analysis with 'so what'", "Decision-ready recommendations", "Strategic financial narrative"],
+    responsibilities: ["CoE strategy, roadmap & standards", "Investment prioritization & business alignment", "Stakeholder engagement & adoption", "Org capability building"],
+    inputs: ["Business priorities & leadership questions", "BU use case pipeline", "CoE team capacity & skill inventory", "Market & technology signals"],
+    outputs: ["Analytics roadmap & investment thesis", "Standards & governance frameworks", "Adoption metrics & enablement plans", "CoE performance & value reporting"],
   },
   {
-    id: "operator",
-    icon: "⬡",
-    tag: "NEW ROLE",
+    id: "product-owner",
+    icon: "◈",
+    tag: "COE ROLE",
     tagColor: "#7EB8D4",
     color: "#7EB8D4",
-    title: "Finance AI Engineer",
-    futureTitle: "Finance AI Engineer",
-    hook: "This role doesn't exist at most companies. It will be one of the most critical hires in finance.",
-    futureHook: "Owns the AI infrastructure powering the entire finance org — models, pipelines, governance.",
-    timeLabels: ["Model ops & monitoring", "Pipeline maintenance", "Governance & audit", "Enabling analysts"],
+    title: "Product Owner",
+    futureTitle: "Product Owner",
+    hook: "BU teams submitted analytics requests into a black hole. Nobody owned the backlog. The most valuable use cases never got built.",
+    futureHook: "Bridges CoE capability and BU need. Translates messy business questions into scalable analytics products.",
+    timeLabels: ["BU discovery & partnering", "Backlog & prioritization", "Use case translation", "Delivery & adoption"],
     timeBefore: [0, 0, 0, 0],
     timeAfter: [30, 25, 25, 20],
-    beforeSkills: ["❌ Role doesn't exist", "Ad-hoc IT requests", "Shadow spreadsheets", "Manual data handoffs", "No model governance", "Finance ↔ Tech gap"],
-    afterSkills: ["Model monitoring & tuning", "Pipeline architecture", "Prompt & logic governance", "Data quality ownership", "Finance-tech translation", "AI audit & compliance"],
-    challenge: "The rolling forecast model is drifting — actuals beat AI predictions by 4–6% three months running.",
+    beforeSkills: ["❌ Role didn't exist", "Requests went directly to data teams", "No backlog management", "Use cases never scoped", "Duplicate builds across BUs", "No adoption tracking"],
+    afterSkills: ["Use case discovery & scoping", "Backlog prioritization", "Business-to-technical translation", "Stakeholder management", "Delivery coordination", "Adoption & feedback loops"],
+    challenge: "The BU backlog has 40 analytics requests. No priorities, no scoping, no acceptance criteria. The data team is being pulled in every direction.",
     steps: [
       {
-        prompt: "How do you diagnose the model drift?",
+        prompt: "How do you bring order to the 40-item backlog?",
         options: [
-          { label: "Escalate to IT. Open a ticket and wait.", type: "old", consequence: "Two weeks of bad forecasts. Finance loses confidence in the AI system. The old Excel model gets quietly reactivated." },
-          { label: "Inspect feature importance. Check whether the new PLG sales motion is in the training data.", type: "new", consequence: "Root cause found in 2 hours. Patch deployed same day. Trust in the model increases because the team sees it can self-correct." }
+          { label: "Rank items by number of requestors. Start with the most-requested.", type: "old", consequence: "Popularity ≠ value. The most-requested item turns out to be a report three people look at monthly. Higher-value work gets buried. The data team builds the wrong things faster." },
+          { label: "Score each item by business impact, strategic alignment, and CoE reusability. Surface the top 5.", type: "new", consequence: "The backlog becomes a decision-making tool, not a wish list. The data team works on items that move the business — and every 'build once' item serves multiple BUs." }
         ]
       },
       {
-        prompt: "New CFO wants 'strategic initiative spend' as a forecast input. How do you handle it?",
+        prompt: "A BU lead asks for a custom dashboard. You know it duplicates something already 80% built.",
         options: [
-          { label: "Add a manual override column in the output spreadsheet", type: "old", consequence: "A parallel system forms. People start trusting the spreadsheet more than the model. AI adoption quietly collapses." },
-          { label: "Define the variable properly, source the data, retrain the relevant model layer", type: "new", consequence: "The model evolves with the business. CFO's confidence grows. You've shown the system is living infrastructure, not a black box." }
+          { label: "Scope the custom build. Log it in the backlog. Assign to the team.", type: "old", consequence: "You build it. Two months later, a second BU asks for the same thing. The CoE has now built the same dashboard three times with three different designs." },
+          { label: "Show the BU lead the existing solution. Co-design the 20% that makes it fit their context. Ship in a week.", type: "new", consequence: "The BU gets what they need faster. The CoE reuses 80% of the build. The shared solution becomes the standard — and the next BU request takes hours, not weeks." }
         ]
       },
       {
-        prompt: "Auditors want to understand how the revenue forecast was generated.",
+        prompt: "A newly shipped analytics product has low engagement after 6 weeks.",
         options: [
-          { label: "Export model outputs and explain verbally in the audit meeting", type: "old", consequence: "Audit drags for weeks. No lineage documentation. Risk flag raised. CFO is unhappy. AI credibility takes a hit." },
-          { label: "Pull the model card, feature log, and decision audit trail from the governance layer", type: "new", consequence: "Clean audit in a day. Explainability was built in from the start. This becomes the standard for AI governance across the company." }
+          { label: "Assume the BU needs more training. Schedule another demo.", type: "old", consequence: "The demo has 4 attendees. The product stays unused. You've shipped something nobody wanted — and the CoE's credibility takes a hit." },
+          { label: "Run user interviews with 3 non-adopters. Find out what they actually need. Prioritize two specific changes.", type: "new", consequence: "The two changes take a day to ship. Engagement doubles the following week. The CoE learns to build feedback loops into every product — not just post-launch rescue missions." }
         ]
       }
     ],
-    responsibilities: ["AI model operations & monitoring", "Data pipeline architecture & maintenance", "Model governance & audit trails", "Enabling analyst self-service"],
-    inputs: ["Business requirements & use cases", "Data warehouse feeds", "Model drift & performance alerts", "Audit & compliance requests"],
-    outputs: ["Trained & monitored AI models", "Governance docs & model cards", "Reliable data pipelines", "Analyst self-service capability"],
+    responsibilities: ["BU use case discovery & scoping", "Analytics product backlog management", "Business-to-technical requirements translation", "Delivery coordination & adoption tracking"],
+    inputs: ["BU team requests & business questions", "CoE team capacity & active workstreams", "Strategic priorities from Sr. Director", "User feedback & adoption metrics"],
+    outputs: ["Prioritized product backlog", "Scoped use case briefs", "Acceptance criteria & delivery milestones", "Adoption reports & feedback loops"],
   },
   {
-    id: "fbp",
-    icon: "◉",
-    tag: "EVOLVING ROLE",
+    id: "data-scientist",
+    icon: "⬡",
+    tag: "COE ROLE",
     tagColor: "#A78BDB",
     color: "#A78BDB",
-    title: "Finance Business Partner",
-    futureTitle: "Embedded Strategy Advisor",
-    hook: "Caught between finance requests and business demands. Translator without authority.",
-    futureHook: "The business unit's embedded strategist. AI generates the analysis — they generate the direction.",
-    timeLabels: ["Reporting requests", "Data reconciliation", "Business partnering", "Proactive strategy"],
-    timeBefore: [40, 30, 25, 5],
-    timeAfter: [5, 5, 45, 45],
+    title: "Data Scientist",
+    futureTitle: "Data Scientist",
+    hook: "Analysis was backward-looking Excel work. Nobody was asking why things happened — let alone what would happen next.",
+    futureHook: "Builds the models that power the CoE's predictive and prescriptive intelligence. Turns data into foresight.",
+    timeLabels: ["Model development", "Analysis & insight", "BU collaboration", "Documentation & governance"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [35, 30, 20, 15],
+    beforeSkills: ["❌ Role didn't exist", "Descriptive reporting only", "Excel-based ad hoc analysis", "No ML or predictive models", "No driver identification", "Insight buried in data dumps"],
+    afterSkills: ["ML model development", "Statistical driver analysis", "Predictive & prescriptive modeling", "Feature engineering", "Model validation & testing", "Insight communication"],
+    challenge: "Churn has increased 12% over three quarters. Leadership wants to know why — and what to do. The data exists. No model does.",
+    steps: [
+      {
+        prompt: "How do you start the churn analysis?",
+        options: [
+          { label: "Pull transaction history. Build a cohort analysis. Share the output with the BU team.", type: "old", consequence: "You identify the 'what' — which cohorts churned. But not the 'why.' Leadership asks the follow-up question you can't answer yet. The analysis is a starting point disguised as a conclusion." },
+          { label: "Define the target variable first. Identify candidate drivers. Build a model that ranks their relative importance.", type: "new", consequence: "The model surfaces three drivers accounting for 70% of churn variance. Two are actionable within 90 days. You've shifted the conversation from reporting what happened to recommending what to do." }
+        ]
+      },
+      {
+        prompt: "The BU head wants the model to guarantee specific churn reduction targets.",
+        options: [
+          { label: "Adjust the model assumptions to produce a more favorable output.", type: "old", consequence: "The model looks better. The prediction is worse. When actuals come in, the gap is embarrassing — and trust in the CoE's analytical work takes a significant hit." },
+          { label: "Explain the confidence intervals. Show the range of outcomes. Give a recommendation with clear conditions.", type: "new", consequence: "The BU head initially pushes back — then respects the honesty. The CoE builds a reputation for rigorous, defensible analysis. That trust compounds every time a model is put in front of a decision-maker." }
+        ]
+      },
+      {
+        prompt: "The model has been running 6 months. Performance has drifted from the initial validation.",
+        options: [
+          { label: "Note the drift. Recommend a full model rebuild when time allows.", type: "old", consequence: "Decisions continue to be made from a degrading model. Six months later, the drift has influenced a major investment. The rebuild conversation is now much harder." },
+          { label: "Diagnose root cause. Is it data drift, feature decay, or a behavioral shift? Retrain the affected layers only.", type: "new", consequence: "Performance is restored in days without a full rebuild. The MLOps engineer adds a monitoring alert so drift is caught automatically going forward. The model ages gracefully instead of silently degrading." }
+        ]
+      }
+    ],
+    responsibilities: ["ML & statistical model development", "Driver identification & pattern analysis", "Predictive & prescriptive insight generation", "Model validation, documentation & handoff"],
+    inputs: ["Curated datasets from Data Engineering", "Business questions from Product Owner & BU Pods", "Model performance signals from MLOps", "External benchmarks & research"],
+    outputs: ["Trained, validated ML models", "Driver & pattern analysis", "Predictive forecasts & prescriptive recommendations", "Model documentation & feature inventories"],
+  },
+  {
+    id: "data-engineer",
+    icon: "◉",
+    tag: "COE ROLE",
+    tagColor: "#6BA8C4",
+    color: "#6BA8C4",
+    title: "Data Engineer",
+    futureTitle: "Data Engineer",
+    hook: "Data lived in 8 siloed systems. Every analyst maintained their own extract. Nobody trusted anyone else's numbers.",
+    futureHook: "Builds the data foundation everything else depends on. One source of truth. Reusable. Governed. Reliable.",
+    timeLabels: ["Pipeline development", "Data model maintenance", "Quality & reliability", "Enabling self-service"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [30, 25, 25, 20],
+    beforeSkills: ["❌ Role didn't exist", "8 siloed source systems", "Manual CSV extracts", "Every analyst owned their own data", "No single source of truth", "Data reconciliation weekly"],
+    afterSkills: ["Data pipeline architecture", "Curated dataset design", "Reusable data model development", "Data quality monitoring", "Self-service data enablement", "Lineage & documentation"],
+    challenge: "Finance and Sales have two different ARR numbers. Neither team trusts the other's source. A board meeting is in 72 hours.",
+    steps: [
+      {
+        prompt: "How do you resolve the ARR discrepancy?",
+        options: [
+          { label: "Pull both sources, reconcile manually, identify the delta, document the differences.", type: "old", consequence: "You find the gap but the fix is one-time. The same discrepancy re-emerges next quarter because the root cause — two systems, no shared definition — was never touched." },
+          { label: "Trace the lineage. Define the canonical ARR definition. Build a single pipeline that both teams work from.", type: "new", consequence: "The reconciliation takes longer upfront. But it's the last time it happens. Both teams work from one number. Future discrepancies are caught in the pipeline — not at 11pm before a presentation." }
+        ]
+      },
+      {
+        prompt: "A Data Scientist needs a new feature for the churn model that isn't in the current data model.",
+        options: [
+          { label: "Build a one-time extract. Hand it off. Log the request for future inclusion.", type: "old", consequence: "The Data Scientist has their extract. But when the model goes to production, the feature isn't in the pipeline. MLOps can't deploy it. The handoff gap costs two weeks of rework." },
+          { label: "Build it properly into the curated dataset. Confirm with MLOps that it's deployable before handing off.", type: "new", consequence: "The feature ships once and works in production immediately. The Data Scientist didn't have to think about the pipeline. The MLOps engineer didn't have to retrofit it. Everyone did their job without tripping over each other." }
+        ]
+      },
+      {
+        prompt: "Three BU analysts are pulling raw data directly from the source system to build their own models.",
+        options: [
+          { label: "Document the issue. Recommend a data governance policy.", type: "old", consequence: "The policy gets written. Nobody enforces it. Direct source pulls continue. In six months you have a shadow analytics ecosystem nobody in the CoE knows about — until a number goes wrong publicly." },
+          { label: "Build the curated datasets the BU analysts actually need. Make the governed source easier to use than the raw pull.", type: "new", consequence: "The BU analysts switch because the governed data is better — not because they're forced to. Governance by convenience, not compliance. The shadow ecosystem gradually disappears." }
+        ]
+      }
+    ],
+    responsibilities: ["Data pipeline architecture & development", "Curated dataset & data model design", "Data quality monitoring & reliability", "Self-service data enablement for BU Pods & CoE"],
+    inputs: ["Source system data & APIs", "Use case requirements from Product Owner", "Feature specs from Data Scientists", "Quality alerts & lineage requests"],
+    outputs: ["Production-grade data pipelines", "Curated, reusable datasets", "Data quality dashboards & alerts", "Data model documentation & lineage"],
+  },
+  {
+    id: "mlops-engineer",
+    icon: "▣",
+    tag: "NEW ROLE",
+    tagColor: "#4AADCC",
+    color: "#4AADCC",
+    title: "ML Ops Engineer",
+    futureTitle: "ML Ops Engineer",
+    hook: "Models built by data scientists never made it to production. Or they did — once — then degraded silently with no one watching.",
+    futureHook: "Closes the gap between model development and business impact. Deploys, monitors, and keeps every model production-reliable.",
+    timeLabels: ["Model deployment", "Monitoring & alerting", "Automation & CI/CD", "Reliability & maintenance"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [30, 30, 25, 15],
+    beforeSkills: ["❌ Role didn't exist", "Models never reached production", "No monitoring or drift detection", "Manual deployment by data scientists", "No CI/CD for ML", "Models degraded silently"],
+    afterSkills: ["Model deployment & versioning", "Drift detection & alerting", "ML pipeline automation", "Performance monitoring", "CI/CD for ML workflows", "Incident response for models"],
+    challenge: "The churn model has been in production for 4 months. Accuracy has dropped 15% since deployment. Nobody in the business knows — yet.",
+    steps: [
+      {
+        prompt: "How do you respond to the drift alert?",
+        options: [
+          { label: "Notify the Data Scientist. Log the issue. Pause the model until it's retrained.", type: "old", consequence: "The model is offline for three weeks while the retraining queue moves. Decisions that depended on it revert to gut feel. The business loses confidence in AI reliability." },
+          { label: "Diagnose the drift type first. Identify which features degraded. Route to the Data Scientist with a root cause brief. Keep the model running with a confidence flag.", type: "new", consequence: "The Data Scientist has exactly what they need to act. The model stays live with appropriate caveats. Retrained in 4 days instead of 3 weeks. The business barely notices there was a problem." }
+        ]
+      },
+      {
+        prompt: "A new model from the Data Scientist team is ready to deploy. No staging environment exists.",
+        options: [
+          { label: "Deploy directly to production. Monitor manually for the first week.", type: "old", consequence: "A feature incompatibility crashes the production pipeline on day two. The board pack scheduled for tomorrow is missing three key figures. The real failure was process." },
+          { label: "Build a staging environment first. Run shadow scoring in parallel with production for a week before cutover.", type: "new", consequence: "The incompatibility is caught in staging. Fixed before any business user ever sees it. The deployment is invisible — which is exactly what a good deployment should be." }
+        ]
+      },
+      {
+        prompt: "The business wants five new models deployed next quarter.",
+        options: [
+          { label: "Review each one manually. Build deployment workflows case by case.", type: "old", consequence: "Each deployment takes 3–4 weeks. You're the bottleneck. Three of the five models are still waiting at quarter end. The CoE's delivery speed becomes the thing slowing down the business." },
+          { label: "Build standardized deployment templates. Automate the 80% that's the same every time. Focus manual effort on the 20% that's unique.", type: "new", consequence: "Deployment time drops to days. All five models ship on schedule. The CoE's capacity for new work doubles — without adding headcount." }
+        ]
+      }
+    ],
+    responsibilities: ["Model deployment & versioning", "Drift detection & performance monitoring", "ML pipeline automation & CI/CD", "Production reliability & incident response"],
+    inputs: ["Trained models & specs from Data Scientists", "Data pipeline outputs from Data Engineering", "Performance metrics & drift signals", "Business SLAs & reliability requirements"],
+    outputs: ["Production-deployed models", "Monitoring dashboards & drift alerts", "Automated deployment pipelines", "Performance reports & incident logs"],
+  },
+  {
+    id: "model-governance",
+    icon: "◫",
+    tag: "NEW ROLE",
+    tagColor: "#8B9FDB",
+    color: "#8B9FDB",
+    title: "Model Governance",
+    futureTitle: "Model Governance",
+    hook: "AI models were black boxes. No documentation, no validation, no risk controls. One audit question away from a serious problem.",
+    futureHook: "Makes the CoE's AI defensible. Builds the controls, documentation, and validation that turn models from risk into trust.",
+    timeLabels: ["Model documentation & validation", "Risk & controls design", "Audit & compliance", "Governance standards"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [30, 25, 25, 20],
+    beforeSkills: ["❌ Role didn't exist", "No model documentation", "No validation framework", "Black box AI decisions", "No audit trail", "Governance gaps flagged by auditors"],
+    afterSkills: ["Model card development", "Validation & testing frameworks", "AI risk assessment", "Audit trail design", "Regulatory compliance", "Model lifecycle governance"],
+    challenge: "Internal audit has flagged two AI models used in financial reporting. Neither has documentation. Neither has been formally validated. The audit committee meets in 3 weeks.",
+    steps: [
+      {
+        prompt: "How do you prepare for the audit committee?",
+        options: [
+          { label: "Document what the models do retroactively. Prepare verbal explanations for the audit meeting.", type: "old", consequence: "Retroactive documentation is incomplete. The audit committee asks questions the documentation can't answer. The models are suspended pending formal review. Finance reverts to manual processes for the quarter." },
+          { label: "Build model cards for both models in two weeks. Include purpose, training data, assumptions, known limitations, and validation results.", type: "new", consequence: "The audit committee has everything they need before the meeting. Questions are answered before they're asked. The models stay live. Governance becomes the thing that protects the CoE — not the thing that blocks it." }
+        ]
+      },
+      {
+        prompt: "A new model is being fast-tracked because the business needs it in two weeks.",
+        options: [
+          { label: "Waive the validation process given the timeline. Add it to the backlog for documentation later.", type: "old", consequence: "The model ships. 'Later' never comes. Three months on, it's being used in a board presentation with no governance record. The retroactive fix will be far more expensive than the two weeks would have cost." },
+          { label: "Run a lightweight fast-track validation. Core tests, abbreviated model card, clear risk flags. Ship in compliance, not outside it.", type: "new", consequence: "The model ships on time and on the right side of governance. The business gets their deadline. The CoE sets a precedent: governance doesn't block speed — it sets the minimum bar for it." }
+        ]
+      },
+      {
+        prompt: "The Data Scientist wants to update a model in production. What's the governance process?",
+        options: [
+          { label: "Treat it as a minor change. No formal review needed for an update.", type: "old", consequence: "The 'minor update' changes a key feature weighting. Outputs shift by 8%. Nobody notices for two months. When it surfaces in a board review, the change can't be traced. Trust in the model erodes." },
+          { label: "Apply a change impact assessment. Significant changes trigger re-validation. All changes are versioned and documented.", type: "new", consequence: "The update is deployed transparently. If outputs shift, it's expected and recorded. Auditors can trace every version. The governance layer makes the model's evolution a feature — not a liability." }
+        ]
+      }
+    ],
+    responsibilities: ["Model documentation, validation & model cards", "AI risk assessment & controls design", "Audit trail & compliance management", "Model lifecycle governance standards"],
+    inputs: ["Model specs & training documentation from Data Scientists", "Deployment records from MLOps", "Regulatory & audit requirements", "Business risk context from Sr. Director"],
+    outputs: ["Model cards & validation reports", "Risk assessments & control frameworks", "Audit-ready documentation", "Governance standards & lifecycle policies"],
+  },
+  {
+    id: "viz-architect",
+    icon: "◆",
+    tag: "BI & VIZ TEAM",
+    tagColor: "#E8836A",
+    color: "#E8836A",
+    title: "Viz Architect",
+    futureTitle: "Viz Architect",
+    hook: "Every team designed their own dashboards. 40 different definitions of 'revenue.' Nobody agreed on anything they saw.",
+    futureHook: "Designs the standards, semantic layers, and self-service infrastructure that make every dashboard trustworthy and consistent.",
+    timeLabels: ["Semantic layer & standards", "Dashboard design & templates", "Self-service enablement", "Governance & consistency"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [30, 25, 25, 20],
+    beforeSkills: ["❌ Role didn't exist", "Every team owned their own viz", "No semantic layer", "Inconsistent metric definitions", "Tool sprawl with no standards", "Self-service meant build-your-own"],
+    afterSkills: ["Semantic layer architecture", "Visualization standard-setting", "Self-service framework design", "Metric governance", "Dashboard template library", "Tool & platform strategy"],
+    challenge: "The CFO is looking at three dashboards showing three different gross margin numbers for the same period. All three were built internally. None is wrong — they just use different definitions.",
+    steps: [
+      {
+        prompt: "How do you fix the three-dashboard problem?",
+        options: [
+          { label: "Identify the 'correct' dashboard. Deprecate the others. Send a communication to the org.", type: "old", consequence: "People keep using the deprecated dashboards. The communication is ignored. Three months later, someone cites the 'wrong' number in a board slide and nobody caught it in time." },
+          { label: "Build a semantic layer that defines gross margin once. All three dashboards draw from the same certified definition.", type: "new", consequence: "There's now one source of truth — built into the architecture, not enforced by a memo. Any future dashboard that references gross margin automatically uses the right definition. The problem can't recur." }
+        ]
+      },
+      {
+        prompt: "A BU analyst wants to build their own ad hoc dashboard outside the standard tooling.",
+        options: [
+          { label: "Approve it. Remind them to follow the style guide.", type: "old", consequence: "The style guide is a PDF from 2022. The dashboard goes live with non-standard metrics. Within a month it's being cited in leadership meetings. Another unofficial source of truth enters the ecosystem." },
+          { label: "Give them access to the self-service layer with certified metrics and approved templates. They build freely — from a governed foundation.", type: "new", consequence: "The BU analyst gets flexibility. The CoE gets consistency. The dashboard is built faster, from trusted data, in a format the whole org can read without translation." }
+        ]
+      },
+      {
+        prompt: "The business wants three new dashboards in two weeks. The team doesn't have capacity.",
+        options: [
+          { label: "Prioritize the most urgent. Build the others in the following sprint.", type: "old", consequence: "The two 'less urgent' dashboards get built by BU teams independently — outside the standard. By the time the Viz Architect gets to them, there are shadow versions already in use." },
+          { label: "Use the standardized component library. Configure the three dashboards from certified templates. Ship all three in a week.", type: "new", consequence: "All three launch on schedule, consistently. The component library investment pays back immediately — and every future request gets easier, not harder." }
+        ]
+      }
+    ],
+    responsibilities: ["Semantic layer design & metric governance", "Visualization standards & template library", "Self-service reporting infrastructure", "Dashboard consistency & platform strategy"],
+    inputs: ["Business reporting requirements from BU Pods", "Data models from Data Engineering", "CoE standards from Sr. Director", "User feedback & adoption data from Product Owner"],
+    outputs: ["Semantic layer & certified metric definitions", "Dashboard templates & design standards", "Self-service reporting environment", "Viz governance documentation"],
+  },
+  {
+    id: "storytelling-analyst",
+    icon: "◎",
+    tag: "BI & VIZ TEAM",
+    tagColor: "#E8C84A",
+    color: "#E8C84A",
+    title: "Storytelling Analyst",
+    futureTitle: "Storytelling Analyst",
+    hook: "Data was shared. Insight wasn't. Charts went into decks. Decisions didn't come out.",
+    futureHook: "Converts CoE outputs into narratives that move decisions. The bridge between what the data says and what the business does.",
+    timeLabels: ["Insight synthesis", "Narrative design", "Executive materials", "Audience framing"],
+    timeBefore: [0, 0, 0, 0],
+    timeAfter: [30, 25, 25, 20],
+    beforeSkills: ["❌ Role didn't exist", "Data shared, insight absent", "Charts without narrative", "Decks that described, not decided", "No audience framing", "Insight buried in appendices"],
+    afterSkills: ["Insight synthesis & framing", "Executive narrative design", "Decision-oriented communication", "Audience-specific storytelling", "Visual + verbal cohesion", "So-what identification"],
+    challenge: "The CoE produced a 40-page analytics report for the quarterly business review. Three executives read it. Zero decisions came out of it.",
+    steps: [
+      {
+        prompt: "How do you rebuild the quarterly analytics output?",
+        options: [
+          { label: "Cut the report to 20 pages. Improve the chart formatting. Add an executive summary.", type: "old", consequence: "A shorter version of the same thing. The executive summary still leads with data, not decisions. Executives read the summary and skip the rest. Same outcome, less paper." },
+          { label: "Redesign around the three decisions the business needs to make this quarter. Every page is in service of one of them.", type: "new", consequence: "The report is 8 pages. Executives read all of it. Two decisions are made in the meeting. The CoE's work is now visible in business outcomes — not just page views." }
+        ]
+      },
+      {
+        prompt: "The Data Scientist team has produced a rich churn analysis. It's technically excellent and completely unreadable to the business.",
+        options: [
+          { label: "Share the technical output with a cover note explaining the key findings.", type: "old", consequence: "The cover note gets read. The analysis doesn't. The key finding is misquoted in the next leadership meeting because the nuance was lost in translation. The Data Scientist is frustrated. The business is misinformed." },
+          { label: "Rebuild the output for the audience. Lead with the so-what. Show one chart. Explain what it means for the decision.", type: "new", consequence: "The business uses the analysis correctly. The Data Scientist gets the credit they deserve. One output serves both audiences — the technical version and the decision version." }
+        ]
+      },
+      {
+        prompt: "A senior leader asks for a 'quick summary' of six months of CoE analytics output.",
+        options: [
+          { label: "Compile the key outputs into a single deck. Send it with a contents page.", type: "old", consequence: "The deck is 30 slides. The leader skims it and asks for a one-pager. You've compressed the work without curating it — the most important insights compete with the least important for attention." },
+          { label: "Identify the three findings that most affected business performance in the period. One page per finding with a clear so-what and next step.", type: "new", consequence: "Three pages. Three decisions. The leader reads all of it and forwards it to the board. The CoE's six months of work is now represented in a form that travels — and leads to action." }
+        ]
+      }
+    ],
+    responsibilities: ["Insight synthesis & narrative design", "Executive-ready materials & board communication", "Decision-oriented output framing", "Audience-specific storytelling & translation"],
+    inputs: ["CoE model outputs & analyses", "Business context from BU Pods & Sr. Director", "Audience profiles & decision timelines", "Board agenda & leadership priorities"],
+    outputs: ["Executive narratives & decision briefs", "Board pack storytelling layer", "Insight summaries & so-what frameworks", "CoE value communication"],
+  },
+
+  // ── BU POD ROLES ───────────────────────────────────────────────────────────
+  {
+    id: "sr-fbp",
+    icon: "▲",
+    tag: "BU POD LEAD",
+    tagColor: "#DB8BA7",
+    color: "#DB8BA7",
+    title: "Senior Finance Business Partner",
+    futureTitle: "Senior Finance Business Partner",
+    hook: "Caught between finance requests and business demands. Translator without authority. Reporter without insight.",
+    futureHook: "The BU's embedded strategist. Frames the right questions, owns performance management, turns CoE insight into decisions.",
+    timeLabels: ["Reporting & requests", "Business partnering", "Performance management", "Strategic advisory"],
+    timeBefore: [45, 30, 20, 5],
+    timeAfter: [5, 20, 35, 40],
     beforeSkills: ["Report generation", "Budget tracking", "Variance explanation", "Stakeholder management", "BU liaison", "Ad-hoc analysis"],
-    afterSkills: ["Strategic challenge", "AI scenario modeling", "Business case development", "Commercial acumen", "Influence without authority", "Forward-looking advisory"],
-    challenge: "Your business unit wants to launch a new product line. They need a finance view in 48 hours.",
+    afterSkills: ["Business question framing", "CoE insight translation", "Strategic challenge & advisory", "Performance narrative", "Influence without authority", "Decision facilitation"],
+    challenge: "Your BU head wants to launch a new product line. They need a finance view in 48 hours. The CoE has the models — but the BU head doesn't trust them yet.",
     steps: [
       {
         prompt: "How do you approach the 48-hour ask?",
         options: [
-          { label: "Build a standard 3-statement model in Excel. Pull comps manually.", type: "old", consequence: "48 hours produces a skeleton model with untested assumptions. The BU head senses you're not really in the business." },
-          { label: "Use AI to generate base case financials instantly. Spend the 48 hours stress-testing assumptions with the business.", type: "new", consequence: "You deliver a fully scenario-tested business case with a clear recommendation. Not just numbers — a decision with a point of view." }
+          { label: "Build a standard financial model in Excel. Pull comps manually. Deliver the numbers.", type: "old", consequence: "48 hours produces a skeleton model with untested assumptions. The BU head gets numbers without a recommendation. Finance is a compliance step, not a decision partner." },
+          { label: "Commission the CoE scenario model. Spend the 48 hours stress-testing assumptions with the BU head. Deliver a recommendation — not just a model.", type: "new", consequence: "You arrive with a fully scenario-tested business case and a clear point of view. The CoE's model earns the BU head's trust because you were in the room contextualizing it. Finance earns a seat at the strategy table." }
         ]
       },
       {
-        prompt: "The BU head pushes back hard on your margin assumptions.",
+        prompt: "The BU head pushes back hard on the CoE's margin assumptions.",
         options: [
-          { label: "Revise the model to reflect their preferred inputs and resubmit", type: "old", consequence: "You've become a number-adjusting service. The analysis loses all credibility. Finance is seen as a rubber stamp." },
-          { label: "Show the sensitivity table. Explain what has to be true for their view to hold.", type: "new", consequence: "You shift the conversation from opinion to evidence. The BU head respects the challenge. Finance earns a seat at the strategy table." }
+          { label: "Go back to the CoE and ask them to revise the assumptions to match the BU head's view.", type: "old", consequence: "The model is adjusted to fit the answer the BU head wanted. Finance loses credibility as an independent voice. The CoE's analysis becomes a rubber stamp, not a challenge." },
+          { label: "Show the sensitivity table. Explain what has to be true for the BU head's view to hold. Make it a conversation, not a confrontation.", type: "new", consequence: "The conversation shifts from opinion to evidence. The BU head either accepts the challenge or provides new information that improves the model. The decision gets better. Finance earns the partnership it's asking for." }
         ]
       },
       {
-        prompt: "Leadership greenlights the launch. What's your role now?",
+        prompt: "The product launches. What's your role in the first 90 days?",
         options: [
-          { label: "Hand off to accounting and return to the reporting cycle", type: "old", consequence: "Finance is absent from the most critical phase. You find out about margin erosion in the next quarterly close." },
-          { label: "Set up real-time KPI monitoring with the AI system. Own the in-flight course correction.", type: "new", consequence: "Finance is embedded in execution, not just planning. You catch a pricing issue in month 2 and save 3 points of margin." }
+          { label: "Produce the monthly variance report. Flag significant deviations as they occur.", type: "old", consequence: "Month 3: margin has eroded 4 points. The variance report flags it after the fact. The BU head asks why Finance didn't see it coming. You reported on the outcome — you didn't influence it." },
+          { label: "Set the performance questions at launch. Work with the CoE to monitor the right signals. Flag issues while they're still correctable.", type: "new", consequence: "A pricing issue surfaces in month 2. You bring it to the BU head before it compounds. Finance is embedded in execution — not just measuring it. This is what the role becomes." }
         ]
       }
     ],
-    responsibilities: ["BU business case development", "Commercial challenge & strategic support", "In-flight performance monitoring", "Finance-to-business translation"],
-    inputs: ["BU strategy & pipeline data", "Company financials & benchmarks", "AI scenario model outputs", "Leadership decisions & requests"],
-    outputs: ["Business cases & go/no-go recommendations", "Real-time KPI frameworks", "Margin & performance alerts", "Strategic finance perspective"],
+    responsibilities: ["BU leadership relationship & business question framing", "Performance management & variance narrative", "CoE insight translation into BU decisions", "Strategic advisory & commercial challenge"],
+    inputs: ["BU strategy & pipeline data", "CoE analytics outputs & model results", "Company financials & benchmarks", "Leadership questions & decision timelines"],
+    outputs: ["Business cases & go/no-go recommendations", "Performance narratives & variance analysis", "CoE-informed strategic recommendations", "BU decision support & course corrections"],
   },
   {
-    id: "corpfpa",
-    icon: "▣",
-    tag: "EVOLVING ROLE",
-    tagColor: "#5BC8A0",
-    color: "#5BC8A0",
-    title: "Corp FP&A Lead",
-    futureTitle: "AI Portfolio Orchestrator",
-    hook: "Consolidation factory. Spends the quarter collecting, cleaning, and correcting BU submissions.",
-    futureHook: "Architect of the AI-native planning system. Sets the logic, governs the models, elevates the org.",
-    timeLabels: ["Chasing submissions", "Consolidation & cleanup", "Insight generation", "System design & governance"],
-    timeBefore: [35, 40, 20, 5],
-    timeAfter: [5, 5, 40, 50],
-    beforeSkills: ["Consolidation management", "Submission tracking", "Variance roll-ups", "Board deck assembly", "Process enforcement", "Cross-BU coordination"],
-    afterSkills: ["AI model governance", "Planning logic design", "Scenario orchestration", "Board-level storytelling", "Org capability building", "System-level thinking"],
-    challenge: "Annual planning cycle kicks off. 12 business units. 6 weeks. Historically a chaos machine.",
+    id: "fpa-analyst",
+    icon: "◈",
+    tag: "BU POD ROLE",
+    tagColor: "#C8A96E",
+    color: "#C8A96E",
+    title: "FP&A Analyst",
+    futureTitle: "FP&A Analyst",
+    hook: "Spends 70% of the week gathering data. Rarely has time to think — let alone recommend.",
+    futureHook: "CoE handles the data pipeline. They own the budgeting, forecasting, and the insight layer that makes planning meaningful.",
+    timeLabels: ["Data wrangling", "Budgeting & forecasting", "Variance analysis", "Decision support"],
+    timeBefore: [65, 20, 10, 5],
+    timeAfter: [5, 30, 35, 30],
+    beforeSkills: ["Advanced Excel / VBA", "Manual ERP pulls", "Budget consolidation", "Variance commentary", "Month-end close", "Slide building"],
+    afterSkills: ["CoE model interpretation", "Assumption stress-testing", "Variance root-cause analysis", "Decision-ready financial narrative", "Scenario design", "Planning partner to BU"],
+    challenge: "Q3 forecast due Friday. Revenue is tracking 8% below plan. Leadership wants answers — not just numbers.",
     steps: [
       {
-        prompt: "How do you set up the planning cycle?",
+        prompt: "Your first move on a tight deadline?",
         options: [
-          { label: "Send the Excel template pack, schedule submission deadlines, start chasing in week 3", type: "old", consequence: "Week 5 is a reconciliation nightmare. Half the submissions have formula errors. You rebuild the board deck at 11pm the night before." },
-          { label: "Define planning logic centrally. Push AI-generated base cases to each BU. They adjust assumptions, not structure.", type: "new", consequence: "BUs spend time on strategy, not spreadsheet mechanics. Consolidation is automatic. Week 6 is reserved for insight and challenge — not cleanup." }
+          { label: "Pull 3 years of actuals from ERP, build the Excel model from scratch, start with the biggest cost centres.", type: "old", consequence: "Three days of data wrangling. Numbers ready Friday, but no time for insight. You're a data courier, not an advisor. The 'why' question comes up in the review and you don't have an answer." },
+          { label: "Query the CoE forecasting system with live data. Define the business questions first. Spend the week on interpretation.", type: "new", consequence: "Model runs by end of day one. You spend the week on what it means — not what the numbers are. You arrive Friday with a point of view and a recommendation. The Sr. FBP puts you in the room." }
         ]
       },
       {
-        prompt: "Two BUs submit wildly optimistic plans with no factual basis.",
+        prompt: "The CoE model flags EMEA deals slipping into Q4. What do you do?",
         options: [
-          { label: "Note the variance in the consolidation commentary and escalate to the CFO", type: "old", consequence: "CFO spends the review interrogating assumptions you didn't challenge. You're a messenger, not a filter." },
-          { label: "Run the AI's scenario stress-test against their submissions. Present the gap analysis before the CFO review.", type: "new", consequence: "You arrive with the hard question already answered. The CFO asks you to run the board sensitivity session. You've become the quality control layer." }
+          { label: "Add a footnote to the variance slide explaining the timing shift.", type: "old", consequence: "The Sr. FBP asks 'so what?' You don't have an answer. You've described the problem — you haven't engaged with it. Finance is a reporting service, not an advisory partner." },
+          { label: "Quantify the Q4 pull-through risk. Model three scenarios. Bring a recommendation to the Sr. FBP.", type: "new", consequence: "You walk into the review owning the narrative. The Sr. FBP takes it to the BU head with your analysis as the foundation. You're not a reporter — you're the analytical engine behind a real decision." }
         ]
       },
       {
-        prompt: "Post-planning, the CFO asks how to make next year's cycle faster.",
+        prompt: "Planning season: the BU head wants an aggressive growth budget with optimistic assumptions.",
         options: [
-          { label: "Propose tighter deadlines and a cleaner template", type: "old", consequence: "Same broken process, marginally better compliance. The fundamental bottleneck — manual consolidation — remains untouched." },
-          { label: "Redesign the cycle architecture: continuous planning, AI-maintained rolling forecasts, quarterly assumption reviews only", type: "new", consequence: "Annual planning becomes a lightweight calibration. The org runs on a live financial picture year-round. The cycle goes from 6 weeks to 6 days." }
+          { label: "Build the plan to their inputs. Note the risk assumptions in the commentary.", type: "old", consequence: "The risk note gets ignored. The plan gets approved. You spend Q2 explaining a variance that was baked in from day one. Finance becomes the team that said 'I told you so' — after it was too late to matter." },
+          { label: "Run the CoE stress-test on the assumptions. Show the range of outcomes. Partner with the Sr. FBP to have the challenge conversation.", type: "new", consequence: "The BU head either revises the assumptions or commits to specific mitigations. Either way, the plan is better. Finance earns the role of planning partner — not planning recorder." }
         ]
       }
     ],
-    responsibilities: ["Consolidated planning across all BUs", "Governing planning logic & assumptions", "Board-level financial narrative", "AI model oversight & quality control"],
-    inputs: ["BU submissions & AI-generated base cases", "CFO strategic priorities", "Market signals & economic data", "Board agenda & investor questions"],
-    outputs: ["Consolidated financial plan", "Board deck & scenario analysis", "Planning system design", "Quality-assured, stress-tested forecasts"],
+    responsibilities: ["Budgeting, forecasting & variance analysis", "BU performance reporting & planning support", "CoE model interpretation & contextualization", "Decision support & financial narrative"],
+    inputs: ["CoE model outputs & forecasts", "ERP & live operational data", "BU context from Sr. Finance BP", "Planning assumptions & business priorities"],
+    outputs: ["BU budget & forecast", "Variance analysis with root-cause and 'so what'", "Scenario analysis & planning submissions", "Decision-ready financial summaries"],
   },
   {
-    id: "datareporting",
-    icon: "◫",
-    tag: "MERGING / EVOLVING",
-    tagColor: "#E8836A",
-    color: "#E8836A",
-    title: "Data & Reporting Analyst",
-    futureTitle: "Insight Designer",
-    hook: "Report factory. Builds the same decks every month. Rarely asked what they actually think.",
-    futureHook: "Curates AI outputs into clear, decision-ready intelligence. The editor who finds the signal in the noise.",
-    timeLabels: ["Report production", "Data validation", "Visualization design", "Insight framing"],
-    timeBefore: [60, 25, 10, 5],
-    timeAfter: [5, 10, 30, 55],
-    beforeSkills: ["SQL / data pulls", "Dashboard maintenance", "Excel charting", "Manual data validation", "Report scheduling", "PowerBI / Tableau"],
-    afterSkills: ["AI output curation", "Narrative data design", "Signal vs. noise judgment", "Decision-ready framing", "Visualization strategy", "Audience-specific insight"],
-    challenge: "The CFO says the monthly board pack has too much data and not enough insight. Again.",
+    id: "data-analyst",
+    icon: "▦",
+    tag: "BU POD ROLE",
+    tagColor: "#A8C86E",
+    color: "#A8C86E",
+    title: "Data Analyst",
+    futureTitle: "Data Analyst",
+    hook: "Ad hoc Excel work. Custom extracts. Every analysis started from scratch. No connection to the CoE — or to each other.",
+    futureHook: "Applies CoE-standardized tools to BU-specific questions. Connects business context to analytical insight at the speed the business needs.",
+    timeLabels: ["Ad hoc analysis", "Dashboard interpretation", "BU context & translation", "Insight to action"],
+    timeBefore: [70, 20, 8, 2],
+    timeAfter: [10, 25, 35, 30],
+    beforeSkills: ["Ad hoc Excel analysis", "Custom SQL extracts", "Isolated data pulls", "No CoE standards applied", "Manual report builds", "Analysis rarely reached decisions"],
+    afterSkills: ["CoE dashboard application", "BU-context interpretation", "Ad hoc analysis with governed data", "Insight translation to action", "Self-service analytics", "Business question framing"],
+    challenge: "The BU head wants to understand why customer acquisition cost has risen 18% over two quarters. They want an answer by end of week.",
     steps: [
       {
-        prompt: "How do you respond to the CFO's feedback?",
+        prompt: "How do you start the analysis?",
         options: [
-          { label: "Cut slides and simplify the charts. Reduce from 40 pages to 25.", type: "old", consequence: "Still data-led. Still backward-looking. The CFO gives the same feedback next quarter. Less data is not the same as more insight." },
-          { label: "Rebuild the pack around three decisions the board needs to make. Every chart earns its place.", type: "new", consequence: "The board pack becomes a decision document. CFO shares it with peer CFOs as a best-practice example. You've changed the format and the function." }
+          { label: "Pull raw data from the CRM and finance system. Build a custom model in Excel.", type: "old", consequence: "Two days building the data structure. Three days on the analysis. The output doesn't match the CoE's CAC definition — which is what leadership uses. You've answered a slightly different question from a slightly different dataset." },
+          { label: "Open the CoE's customer acquisition dashboard. Use it as the starting point. Apply BU-specific context to interpret the signals.", type: "new", consequence: "The analysis starts from a trusted, governed baseline. You spend your time on the 'why' — applying BU context to patterns the CoE model has already surfaced. The answer is ready in two days and aligned with the metrics leadership actually tracks." }
         ]
       },
       {
-        prompt: "AI generates 200 KPIs from the data warehouse. Leadership wants a summary.",
+        prompt: "The CoE dashboard shows CAC rising, but your BU head believes it's a mix-shift issue, not a true efficiency problem. How do you test that?",
         options: [
-          { label: "Build a dashboard showing all 200. Flag the ones that moved significantly.", type: "old", consequence: "Nobody reads it. The important signal is buried in the volume. Leadership starts asking for the 'real' summary." },
-          { label: "Apply editorial judgment. Surface the 5 that matter this quarter. Explain the 'so what' of each.", type: "new", consequence: "Leadership starts forwarding your summary to their direct reports. You've become the signal filter — the most valuable function in a data-rich environment." }
+          { label: "Build a separate Excel model to test the mix-shift hypothesis independently.", type: "old", consequence: "Your model produces different base numbers from the CoE dashboard. The BU head now has two versions of reality. The mix-shift question is lost in the data alignment discussion." },
+          { label: "Apply the mix-shift cut directly in the CoE self-service layer. Segment by channel and cohort using the certified definitions.", type: "new", consequence: "The hypothesis is tested within 20 minutes using the same dataset leadership already trusts. The mix-shift is confirmed for two channels. The BU head gets a clean answer — and confidence that Finance and CoE are working from the same playbook." }
         ]
       },
       {
-        prompt: "A business unit wants their own custom reporting suite.",
+        prompt: "The Sr. FBP asks you to build a regular monthly report tracking five new BU KPIs.",
         options: [
-          { label: "Build it to spec. Add it to the monthly production schedule.", type: "old", consequence: "Another report to maintain forever. You're a production service. Your backlog grows, your strategic value shrinks." },
-          { label: "Give them access to the AI reporting layer with guardrails. Train them to self-serve.", type: "new", consequence: "You've eliminated a recurring task and upskilled the BU. You redirect that time to board-level insight work. This is the leverage model." }
+          { label: "Build the report in Excel. Set up a monthly refresh process. Add it to the production schedule.", type: "old", consequence: "A new manual report joins the backlog. By month four, one of the KPI definitions has drifted from the CoE standard and nobody noticed. Another shadow data source is born." },
+          { label: "Work with the Viz Architect to add the five KPIs to the CoE's self-service layer. Configure the BU view. No manual refresh needed.", type: "new", consequence: "The report builds itself from governed data. Zero maintenance. The Sr. FBP has a live view any time — not a monthly snapshot. You've redirected 2 hours/month of production time to actual analysis." }
         ]
       }
     ],
-    responsibilities: ["Board pack & insight production", "KPI curation & signal filtering", "Data quality & validation", "Self-serve analytics enablement"],
-    inputs: ["Data warehouse & AI-generated KPIs (200+)", "Leadership & BU report requests", "Audience context & board agenda", "Business questions to answer"],
-    outputs: ["Decision-ready board packs", "Signal summaries (5 KPIs, not 200)", "Self-serve reporting tools", "Audience-specific insights"],
+    responsibilities: ["Ad hoc analysis & business question answering", "CoE dashboard interpretation in BU context", "BU data needs scoping & translation to CoE", "Insight communication to BU leadership"],
+    inputs: ["CoE standardized dashboards & certified datasets", "BU business context & operational data", "Ad hoc questions from Sr. Finance BP & BU head", "CoE self-service analytics layer"],
+    outputs: ["BU-contextualized ad hoc analyses", "Interpreted CoE insights with business framing", "Data needs briefs for CoE Product Owner", "Decision-ready summaries for Sr. Finance BP"],
   },
-  {
-    id: "cfo",
-    icon: "✦",
-    tag: "TRANSFORMING",
-    tagColor: "#E8C84A",
-    color: "#E8C84A",
-    title: "CFO",
-    futureTitle: "Chief Intelligence Officer",
-    hook: "Guardian of historical accuracy. Trusted for what happened. Rarely the first call for what's next.",
-    futureHook: "Architect of the company's decision intelligence. Turns AI capability into competitive advantage.",
-    timeLabels: ["Close & compliance", "Reporting cycle", "Business partnering", "Forward-looking strategy"],
-    timeBefore: [30, 35, 25, 10],
-    timeAfter: [10, 5, 30, 55],
-    beforeSkills: ["Financial controls", "Board reporting", "Capital allocation", "Risk management", "Investor relations", "Compliance oversight"],
-    afterSkills: ["AI governance & ethics", "Decision architecture", "Org capability design", "Real-time capital strategy", "Competitive intelligence", "Human + AI team leadership"],
-    challenge: "The board asks: is this company ready to compete in an AI-native landscape?",
-    steps: [
-      {
-        prompt: "How do you answer the board's question?",
-        options: [
-          { label: "Present the AI tools currently in use across the business and cost savings achieved", type: "old", consequence: "The board hears 'we're using AI as a cost tool.' That's table stakes, not differentiation. The question remains unanswered." },
-          { label: "Present the decision velocity of the org. How fast can finance generate insight? How does that compare to competitors?", type: "new", consequence: "You reframe the conversation entirely: AI readiness is a strategic capability, not a software checklist. The board funds it at a different level." }
-        ]
-      },
-      {
-        prompt: "Your FP&A team wants to automate the entire forecasting process.",
-        options: [
-          { label: "Approve the automation project. Set an ROI target and a timeline.", type: "old", consequence: "You get faster forecasts. But the team automated a broken process. The same bad questions get answered faster." },
-          { label: "Challenge them first: what decisions does the forecast need to enable? Redesign from the output backward.", type: "new", consequence: "The team builds a system that answers the right questions automatically. The forecast becomes a strategic instrument, not a compliance exercise." }
-        ]
-      },
-      {
-        prompt: "The CEO asks you to evaluate a major acquisition. Timeline: 10 days.",
-        options: [
-          { label: "Mobilize the team. Start pulling comps, building the model, coordinating with bankers.", type: "old", consequence: "Day 10 you have financials. But the strategic thesis was shaped without finance's perspective in the room early enough to matter." },
-          { label: "Deploy AI scenario modeling in hour one. Spend the 10 days stress-testing the strategic thesis — not building the spreadsheet.", type: "new", consequence: "Finance shapes the deal logic from day one. You identify a structural risk the bankers missed. The board sees the CFO as a strategic partner, not a scorekeeper." }
-        ]
-      }
-    ],
-    responsibilities: ["Capital allocation & investment strategy", "Board reporting & investor relations", "AI governance & org capability design", "Strategic decision architecture"],
-    inputs: ["Business performance data & AI insights", "Board & investor questions", "M&A opportunities & market intelligence", "AI capability assessments"],
-    outputs: ["Capital allocation decisions", "Strategic direction & priorities", "AI investment thesis & governance", "Org transformation roadmap"],
-  }
 ];
 
 // ── COMPONENTS ────────────────────────────────────────────────────────────────
@@ -570,7 +788,7 @@ function GamePlay({ persona, onBack }) {
 
 // ── ORG JOURNEY ───────────────────────────────────────────────────────────────
 
-const JOURNEY_ORDER = ["cfo", "corpfpa", "fbp", "analyst", "datareporting", "operator"];
+const JOURNEY_ORDER = ["sr-director", "product-owner", "data-scientist", "data-engineer", "mlops-engineer", "model-governance", "viz-architect", "storytelling-analyst", "sr-fbp", "fpa-analyst", "data-analyst"];
 
 const ORG_SCENARIOS = [
   {
@@ -578,66 +796,116 @@ const ORG_SCENARIOS = [
     icon: "◎",
     title: "Annual Planning Cycle",
     subtitle: "12 BUs. 6 weeks. The process that eats the quarter — every quarter.",
-    description: "From the CFO setting direction to the analyst building models, every finance role touches the annual plan. See how AI changes each one's part.",
+    description: "From the CoE setting standards to BU Pod analysts building models, every role touches the annual plan. See how the CoE + BU Pod model changes each one's part.",
     roles: {
-      cfo: {
-        involvement: "both",
-        involvementNote: null,
-        scenarioContext: "The board has asked you to cut the planning cycle time in half and improve the quality of outputs. The current process relies on manual submissions, consolidation, and last-minute cleanup.",
-        prompt: "How do you redesign the planning process?",
+      "sr-director": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, analytics strategy was nobody's job. Every team built their own planning models, used their own definitions, and solved the same data problems in isolation. The Sr. Director role exists specifically to fix that — and the planning cycle is the first place the absence is felt.",
+        scenarioContext: "It's your first planning cycle as CoE leader. Every BU is building models in Excel using different revenue definitions. The FP&A team is drowning in consolidation. You have the mandate to change this — but the cycle is already in flight.",
+        prompt: "How do you create value in this cycle while designing the next one?",
         options: [
-          { label: "Commission a task force to tighten submission timelines and enforce template compliance", type: "old", consequence: "A governance layer on top of a broken process. The cycle is marginally faster. The real bottleneck — manual consolidation — is untouched. You'll have the same conversation next year." },
-          { label: "Redesign from the decision backward: what does the board actually need from the plan, and what system produces it continuously?", type: "new", consequence: "Planning logic is defined once. The AI executes it every cycle. The annual plan becomes a calibration of a live model, not a six-week production event. The board gets better answers faster." }
+          { label: "Focus entirely on next year's redesign. This year's cycle is too broken to fix in-flight.", type: "old", consequence: "You deliver a thorough future-state design. But this year's cycle ends in the same chaos — and the business concludes the CoE has no near-term value. Credibility is harder to build from a standing start next year." },
+          { label: "Identify two high-pain consolidation problems you can solve now. Design the systemic fix in parallel. Deliver quick wins and long-term architecture.", type: "new", consequence: "Two changes — a shared revenue definition and a common template for the top 5 cost centres — save the consolidation team 10 days of cleanup. The business sees immediate CoE value. You enter next year's cycle with credibility and a clear redesign brief." }
         ]
       },
-      corpfpa: {
-        involvement: "both",
-        involvementNote: null,
-        scenarioContext: "13 BU submissions are due in 4 weeks. Based on last year, half will have formula errors, three will miss the deadline, and you'll spend week 5 reconciling conflicting assumptions.",
-        prompt: "How do you set up this year's planning cycle?",
+      "product-owner": {
+        involvement: "future-only",
+        involvementNote: "Today, analytics requests for the planning cycle go directly to individual data analysts or IT — whichever answers first. There's no backlog, no prioritization, no one ensuring the most valuable work gets built. The Product Owner makes CoE planning support coherent.",
+        scenarioContext: "It's week one of planning season. The FP&A team has 12 outstanding analytics requests. The data team has capacity for 4. Nobody has prioritized the list.",
+        prompt: "How do you triage the planning analytics backlog?",
         options: [
-          { label: "Send the Excel template pack, set the deadline, and prepare to chase from week 3", type: "old", consequence: "Week 5 is a reconciliation war. You rebuild the board deck at 11pm the night before it's due. This is still the most common outcome in finance." },
-          { label: "Push AI-generated base cases to each BU. They adjust assumptions, not structure. Consolidation runs automatically.", type: "new", consequence: "BUs spend time on strategy, not spreadsheet mechanics. Week 6 is reserved for insight and challenge — not cleanup. The cycle ends on schedule with a defensible plan." }
+          { label: "Work through requests in the order they were submitted. First in, first out.", type: "old", consequence: "The data team builds what arrived first — not what matters most. By week three, the three requests that could have unlocked cross-BU consolidation are still queued behind individual BU reports that each serve one person." },
+          { label: "Score by planning-cycle dependency and cross-BU reusability. Surface the 4 that unlock the most work downstream.", type: "new", consequence: "The top 4 items are the shared revenue model, the assumptions stress-test template, the consolidation feed, and the board pack scenario engine. Everything else benefits from these being built first. The team works in the right order." }
         ]
       },
-      fbp: {
+      "data-scientist": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, forecasts were built bottom-up in Excel. Nobody was modeling the statistical drivers of plan accuracy or predicting where BU submissions would miss.",
+        scenarioContext: "Corp FP&A asks: can you build something that predicts which BU submissions are most likely to be inaccurate before they come in?",
+        prompt: "Can you build a forecast accuracy predictor for the planning cycle?",
+        options: [
+          { label: "It's a great idea but requires more historical data and a proper model build. Log it for next year.", type: "old", consequence: "Corp FP&A spends week 5 doing the same manual challenge review they've always done. Two BUs with historically optimistic plans slip through unchallenged. The CFO catches it in the board review." },
+          { label: "Build a lightweight version using 3 years of prior submissions. Even directional predictions surface the BUs most likely to miss — and the CoE focuses challenge effort there.", type: "new", consequence: "The model flags four BUs with historically optimistic assumptions. The Sr. FBP in each pod runs targeted stress-tests on those submissions. Two are revised before submission. The consolidation review is clean for the first time in three years." }
+        ]
+      },
+      "data-engineer": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, every BU pulled planning data from source systems directly. The same ERP data looked different in every BU model because each analyst applied their own extraction logic.",
+        scenarioContext: "Three BUs are using Q2 actuals as their planning baseline. One is using Q1. None of them know the others are using different periods.",
+        prompt: "How do you ensure all planning models work from the same baseline?",
+        options: [
+          { label: "Flag the issue to each BU. Ask them to align on the correct baseline manually.", type: "old", consequence: "Two BUs update their baseline. Two don't see the message in time. The consolidation team discovers the mismatch in week 4 and spends two days reconciling four different versions of the same actuals." },
+          { label: "Build a single curated actuals feed that all planning models connect to. One source. One version. Updated once, reflected everywhere.", type: "new", consequence: "Every BU's planning model draws from the same baseline automatically. The reconciliation problem can't happen. The consolidation team spends week 4 on insight — not on data alignment." }
+        ]
+      },
+      "mlops-engineer": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, planning models didn't go through any deployment process. They were emailed as Excel files, overwritten, and version-controlled by filename date.",
+        scenarioContext: "The CoE has built a new rolling forecast model for the planning cycle. It needs to go live in 48 hours so BUs can use it for submissions.",
+        prompt: "How do you deploy the planning model safely in a 48-hour window?",
+        options: [
+          { label: "Deploy directly to production. It's a forecast model — the stakes aren't production-critical.", type: "old", consequence: "A data schema mismatch causes the model to fail for 3 of the 12 BUs. Those BUs revert to Excel. By the time the fix is deployed, their submission windows have passed. Week 5 is a consolidation repair job." },
+          { label: "Run a parallel shadow test against last year's actuals before go-live. Validate outputs across all 12 BU configurations.", type: "new", consequence: "The schema mismatch is caught in shadow testing on hour 36. Fixed before any BU attempts a submission. The model goes live cleanly. All 12 BUs submit from the same system." }
+        ]
+      },
+      "model-governance": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, planning models had no governance. Assumptions were implicit. If a plan was wrong, there was no way to trace whether it was a bad model, bad inputs, or a process failure.",
+        scenarioContext: "The finance controller asks: if external auditors question how the AI-assisted plan was derived, what can we show them?",
+        prompt: "What governance do you put in place for AI-assisted planning?",
+        options: [
+          { label: "Create a general disclaimer that the models are directional. Auditors understand forecasts aren't guarantees.", type: "old", consequence: "Auditors ask to see the model logic. There's nothing to show. They classify the AI-assisted plan as undocumented and require a manual parallel process for the following year. The CoE's efficiency gains are reversed by the compliance requirement." },
+          { label: "Build a model card for each planning model: purpose, inputs, assumptions, known limitations, and validation results. Create a run log for every planning cycle execution.", type: "new", consequence: "Auditors receive a complete governance package before they ask for it. No issues raised. The governance layer becomes the reason leadership trusts the AI-assisted plan — not a bureaucratic afterthought." }
+        ]
+      },
+      "viz-architect": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, planning dashboards were built independently by each BU. Three different definitions of 'plan vs. actual' existed simultaneously — and nobody realized until the board review.",
+        scenarioContext: "Corp FP&A needs a consolidated planning progress dashboard. Seven BUs have already built their own versions, each using slightly different metric definitions.",
+        prompt: "How do you handle the seven existing BU planning dashboards?",
+        options: [
+          { label: "Build the consolidated view on top of the seven existing dashboards. Reconcile the metric differences manually.", type: "old", consequence: "The consolidated dashboard requires manual adjustment every week because the underlying definitions keep drifting. Corp FP&A stops trusting it by week 3 and maintains their own spreadsheet version instead." },
+          { label: "Establish shared metric definitions in the semantic layer first. Build one consolidated view that all BU dashboards roll up into automatically.", type: "new", consequence: "The seven BU dashboards are retrofitted to pull from the certified definitions. The consolidated view is live and accurate without manual reconciliation. Corp FP&A uses it as the single planning status source of truth for the first time." }
+        ]
+      },
+      "storytelling-analyst": {
+        involvement: "today-only",
+        involvementNote: "In the AI-native planning cycle, status dashboards and consolidation reports are generated automatically from the live planning model. The manual production work largely disappears — and this role's contribution shifts entirely to the insight layer: identifying the three themes emerging from the plan that leadership needs to act on.",
+        scenarioContext: "Every planning cycle you produce a 40-page status dashboard tracking submission progress, variance flags, and consolidation status. It takes a week to assemble. Leadership glances at it once.",
+        prompt: "Corp FP&A asks for the annual planning status dashboard.",
+        options: [
+          { label: "Build it from scratch as usual. Submission tracking, variance flags, consolidation status. Submit in a week.", type: "old", consequence: "It takes a week. Leadership looks at it once in the first planning review and never opens it again. The same request comes next year. The week was spent on a deliverable, not on insight." },
+          { label: "Point Corp FP&A to the live planning model view. Redirect your week to identifying the three insight themes emerging from the plan submissions so far.", type: "new", consequence: "The dashboard runs itself. You surface the insight that two BUs are assuming contradictory market share positions in the same segment — something the status dashboard never would have flagged. That conversation happens before the CFO review, not in it." }
+        ]
+      },
+      "sr-fbp": {
         involvement: "both",
         involvementNote: null,
         scenarioContext: "Your BU head wants to submit an aggressive growth plan. The underlying assumptions haven't been stress-tested. You have one week before the submission deadline.",
         prompt: "How do you approach the BU planning conversation?",
         options: [
-          { label: "Build the plan to their inputs. Add a risk footnote. Submit on time.", type: "old", consequence: "The risk footnote gets ignored. The plan gets approved. You find out it was wrong in the Q2 close — when it's too late to course-correct without a painful conversation." },
-          { label: "Run the AI scenario model. Show exactly what has to be true for their assumptions to hold. Make the challenge the starting point.", type: "new", consequence: "The conversation shifts from opinion to evidence. The plan submitted is actually achievable. Finance earns credibility — not as a gatekeeper, but as a partner who made the plan better." }
+          { label: "Build the plan to their inputs. Add a risk footnote. Submit on time.", type: "old", consequence: "The risk footnote gets ignored. The plan gets approved. You find out it was wrong in the Q2 close — when it's too late to course-correct without a painful conversation. Finance was a recorder, not a partner." },
+          { label: "Commission the CoE scenario model. Show exactly what has to be true for the assumptions to hold. Make the challenge the starting point — not the footnote.", type: "new", consequence: "The conversation shifts from opinion to evidence. The plan submitted is achievable and defended. Finance earns credibility — not as a gatekeeper, but as the partner who made the plan better." }
         ]
       },
-      analyst: {
+      "fpa-analyst": {
         involvement: "both",
         involvementNote: null,
-        scenarioContext: "Six cost centre models need to be built for the plan. Two weeks. The BU submissions are inconsistent and the FBP is already fielding questions from the business.",
+        scenarioContext: "Six cost centre models need to be built for the plan. Two weeks. BU submissions are inconsistent and the Sr. FBP is already fielding questions from the business.",
         prompt: "How do you approach the model build?",
         options: [
-          { label: "Pull actuals from ERP, build each model from scratch in Excel, start with the biggest cost centres", type: "old", consequence: "Two weeks in, three models are done. The remaining three are rough. You miss the submission window for one BU and spend the final days in cleanup mode." },
-          { label: "Use the AI system to generate base cases for all six instantly. Spend the two weeks stress-testing assumptions and building the insight layer.", type: "new", consequence: "All six models are ready by day two. The remaining time goes into insight and challenge. You submit on time with a point of view on each — not just numbers." }
+          { label: "Pull actuals from ERP, build each model from scratch in Excel, start with the biggest cost centres.", type: "old", consequence: "Two weeks in, three models are done. The remaining three are rough. You miss the submission window for one BU and spend the final days in cleanup mode. The insight layer never gets built." },
+          { label: "Use the CoE planning system to generate base cases for all six. Spend the two weeks stress-testing assumptions and building the insight layer.", type: "new", consequence: "All six models are ready by day two. The remaining time goes into insight and challenge. You submit on time with a point of view on each — not just numbers. The Sr. FBP has something to work with." }
         ]
       },
-      datareporting: {
-        involvement: "today-only",
-        involvementNote: "In the AI-native planning cycle, status dashboards and consolidation reports are generated automatically from the live planning model. The manual production work that fills this role's planning cycle largely disappears — freeing it for something more valuable.",
-        scenarioContext: "Every planning cycle you produce a 40-page status dashboard tracking submission progress, variance flags, and consolidation status. It takes a week to build. Leadership glances at it once.",
-        prompt: "Finance leadership asks for a planning cycle status dashboard.",
+      "data-analyst": {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The BU head wants to understand how the plan compares to prior years across every product line — in the format they're used to, with their preferred breakdowns.",
+        prompt: "How do you produce the BU planning comparison?",
         options: [
-          { label: "Build it from scratch using the submitted data. Include every metric. Add filters for BU and cost centre.", type: "old", consequence: "It takes a week. Leadership looks at it once in the first planning review and never opens it again. The same request comes next year." },
-          { label: "Point them to the live planning model view. Configure what they need to see. Redirect your time to the insights the data can't surface automatically.", type: "new", consequence: "The dashboard runs itself from now on. You've freed up a week of production time and redirected it to the editorial work — signal identification and narrative framing — that actually requires judgment." }
-        ]
-      },
-      operator: {
-        involvement: "future-only",
-        involvementNote: "This role doesn't exist in today's planning cycle. That's part of why the cycle is broken — nobody owns the AI infrastructure that would make the whole process reliable.",
-        scenarioContext: "In the AI-native org, you maintain the models and data pipelines that every other role depends on during the planning cycle. You prevent problems before they happen.",
-        prompt: "Three BUs are using outdated revenue assumptions in the planning model. The data hasn't been refreshed in two quarters.",
-        options: [
-          { label: "Wait for the BUs to flag it in their submissions — it's their data responsibility", type: "old", consequence: "The model produces a plan built on stale assumptions. Nobody finds out until the Q2 forecast diverges significantly. By then, capital has already been misallocated." },
-          { label: "Proactively identify the gap, flag it to the relevant FBPs, and update the training data before the planning window opens", type: "new", consequence: "The planning model is reliable from day one. Every role downstream works from accurate data. You've prevented a problem nobody knew was coming — and nobody would have thanked you for missing." }
+          { label: "Build the comparison in Excel. Pull prior year actuals manually. Format to the BU head's template.", type: "old", consequence: "It takes two days. The numbers don't reconcile perfectly with the CoE's consolidated view — different extraction logic, slightly different period definitions. The BU head now has two versions and asks which one to trust." },
+          { label: "Use the CoE planning dashboard to generate the comparison with the right filters applied. Export in the format the BU head needs.", type: "new", consequence: "The comparison is ready in 20 minutes and aligns exactly with the consolidated view. The BU head has confidence in the numbers. You spend the saved time explaining what the year-over-year shifts actually mean." }
         ]
       }
     }
@@ -647,66 +915,116 @@ const ORG_SCENARIOS = [
     icon: "▦",
     title: "Quarterly Board Pack",
     subtitle: "90 pages. 3 decisions the board needs to make. Finding them is the job.",
-    description: "The most visible output finance produces. See how each role's contribution changes when the pack is built around decisions, not data.",
+    description: "The most visible output the org produces. See how the CoE and BU Pod roles each contribute differently when the pack is built around decisions, not data.",
     roles: {
-      cfo: {
-        involvement: "both",
-        involvementNote: null,
-        scenarioContext: "The board has told you — again — that the pack is too long, too backward-looking, and doesn't help them make decisions. This is the third consecutive quarter with the same feedback.",
-        prompt: "How do you respond?",
+      "sr-director": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, the board pack was owned entirely by Corp FP&A and assembled manually. There was no analytics strategy layer, no intelligence design, and no one accountable for whether the pack enabled decisions.",
+        scenarioContext: "The CFO asks you to redesign the CoE's contribution to the quarterly board pack. Currently the CoE provides charts on request — with no visibility into how they're used or whether they drive decisions.",
+        prompt: "What should the CoE's role in the board pack be?",
         options: [
-          { label: "Ask the team to cut 20 pages and simplify the charts. Set a 70-page cap going forward.", type: "old", consequence: "You get a shorter version of the same thing. Less data is not more insight. The feedback comes again next quarter, verbatim." },
-          { label: "Reframe the pack entirely around the three decisions the board needs to make this quarter. Every page earns its place.", type: "new", consequence: "The board finishes in 90 minutes instead of three hours. Two decisions get made in the room. You've changed what the board pack is for — not just how long it is." }
+          { label: "Provide charts and data summaries on request. Finance owns the narrative — analytics supports it.", type: "old", consequence: "The CoE produces good charts that arrive too late, answer the wrong questions, and get cut before the final version. The board pack continues to be data-rich and decision-poor. The CoE's contribution is invisible." },
+          { label: "Design the intelligence layer: what are the 3 decisions the board needs to make this quarter, and what does each one require the CoE to surface?", type: "new", consequence: "Every CoE output in the pack is anchored to a specific decision. The Storytelling Analyst knows what narrative to build. The FP&A Analyst knows what sensitivity analysis to run. The board pack changes — because the brief changed." }
         ]
       },
-      corpfpa: {
-        involvement: "both",
-        involvementNote: null,
-        scenarioContext: "The board pack is due in 5 days. Three BUs haven't submitted their commentary. Two that have submitted need significant revisions.",
-        prompt: "How do you handle the missing and incomplete commentary?",
+      "product-owner": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, board pack analytics requests arrived two weeks before the deadline with no scope, no audience context, and no coordination between requestors. Data teams built what they were asked for — not what was needed.",
+        scenarioContext: "Three different board pack analytics requests have arrived from Corp FP&A and two BU teams. They overlap significantly and are all due Friday.",
+        prompt: "How do you manage the three overlapping board pack requests?",
         options: [
-          { label: "Chase the BUs. Hold the pack. Push the deadline if needed.", type: "old", consequence: "The pack goes out late. The board receives it the morning of the meeting. Two members haven't read it. The CFO is frustrated and the process looks broken." },
-          { label: "Generate AI commentary from each BU's actuals and variance data. Send it to BUs for review and approval — not for drafting from scratch.", type: "new", consequence: "BUs review and approve in hours rather than days. The pack goes out 48 hours early. The board arrives prepared. The process is no longer held hostage by the slowest BU." }
+          { label: "Assign each request to a different data team member. Build all three independently.", type: "old", consequence: "Three analyses are delivered. Two use different revenue definitions. One contradicts another on margin trend. The board pack editor has to reconcile them manually — and cuts all three in favor of something simpler." },
+          { label: "Map the overlap. Identify the single core analysis that answers all three. Build it once with the right inputs.", type: "new", consequence: "One analysis ships in the time it would have taken to build one of the three. All three requestors get what they need. The board pack has one coherent analytics narrative instead of three competing ones." }
         ]
       },
-      fbp: {
+      "data-scientist": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, board pack analytics were entirely historical. The board saw what happened. In the CoE model, the board sees what is likely to happen — and the specific signals that would change that view.",
+        scenarioContext: "The CFO wants a predictive element in this quarter's board pack: which of the three strategic scenarios the business has been tracking is most likely to play out over the next two quarters?",
+        prompt: "How do you build the predictive scenario view for the board?",
+        options: [
+          { label: "Caveat heavily that predictions carry uncertainty. Provide a range but don't commit to a most-likely outcome.", type: "old", consequence: "The board receives a range with no recommendation. They ask which scenario to plan against. Nobody has an answer. The analysis adds to the data volume without improving the decision." },
+          { label: "Build the probability-weighted scenario with explicit assumptions. State the most likely outcome and the two leading indicators that would cause you to revise it.", type: "new", consequence: "The board has a clear view, a recommended planning scenario, and a monitoring framework. They make a capital allocation decision in the meeting rather than deferring it. The CoE's analytical work directly drove a board outcome." }
+        ]
+      },
+      "data-engineer": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, the board pack was assembled from at least four source systems — two of which had known data quality issues that were worked around every quarter. Nobody owned fixing the root cause.",
+        scenarioContext: "One of the board pack's core data feeds has been producing inconsistent revenue figures for two months. Everyone knows. The workaround is a manual adjustment applied in the final assembly step.",
+        prompt: "A known data quality issue is affecting the board pack pipeline.",
+        options: [
+          { label: "Log it as a known issue. Continue the manual workaround this quarter. Note it in the commentary.", type: "old", consequence: "The workaround becomes permanent. The manual adjustment gets applied inconsistently in Q3. A board member questions a revenue figure in the meeting. Tracing it takes three days and surfaces the two-month-old unfixed pipeline issue. The credibility damage is disproportionate to the original data problem." },
+          { label: "Trace the root cause. Fix the pipeline. Add a monitoring alert so it can't silently drift again.", type: "new", consequence: "The issue is resolved permanently in four days. The board pack is clean. The monitoring alert catches a related issue two months later before it reaches any output. The CoE is the reason the board can trust the numbers — not the reason they can't." }
+        ]
+      },
+      "mlops-engineer": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, board pack analytics were static — models were run manually, outputs were copied into slides, and there was no automated reliability layer. A bad run on the wrong night could corrupt the entire pack.",
+        scenarioContext: "The board pack relies on outputs from three CoE models. All three need to run cleanly in the 48-hour window before the pack is finalized.",
+        prompt: "How do you ensure the model outputs for the board pack are reliable on deadline?",
+        options: [
+          { label: "Run the models manually the night before. Check the outputs visually. Flag anything that looks anomalous.", type: "old", consequence: "Two models run cleanly. One produces an output that looks right but has a stale data input. It gets missed in the visual check. The CFO catches it in the pre-read. The correction takes four hours and delays the pack distribution." },
+          { label: "Build an automated board pack pipeline with validation checks at every step. Any anomaly triggers an alert before it reaches the pack.", type: "new", consequence: "The stale input is caught automatically at 2am, six hours before the pack is finalized. The alert goes to the Data Engineer who refreshes the feed. The CFO receives a clean pack. Nobody finds out there was a problem — which is exactly right." }
+        ]
+      },
+      "model-governance": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, AI outputs used in the board pack had no governance record. When board members asked how a number was derived, the answer was a verbal explanation from whoever built the model.",
+        scenarioContext: "A board member directly challenges the methodology behind the AI-generated revenue forecast in the board meeting. They want to understand what assumptions are driving it.",
+        prompt: "A board member challenges the forecast methodology in the meeting.",
+        options: [
+          { label: "Acknowledge the question. Explain verbally how the model works. Offer to provide more detail offline.", type: "old", consequence: "The verbal explanation is credible but unverifiable. The board member requests a written methodology review before acting on the forecast. The decision is deferred. The CoE spends two weeks producing retroactive documentation." },
+          { label: "Reference the model card in the board appendix. It has been included since the model went live — inputs, assumptions, validation results, and known limitations all documented.", type: "new", consequence: "The board member turns to page 47. Their question is answered before the next agenda item. The decision proceeds. The governance layer protected the CoE's credibility at exactly the moment it mattered most." }
+        ]
+      },
+      "viz-architect": {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The CFO says the board pack has too much data and not enough insight — for the third consecutive quarter. The feedback is the same every time: 'it doesn't help us make decisions.'",
+        prompt: "How do you respond to the board pack visualization feedback?",
+        options: [
+          { label: "Cut 20 pages. Simplify the charts. Submit a cleaner version of the same structure.", type: "old", consequence: "Shorter data is still data. The CFO gives the same feedback next quarter. You've optimized the production — you haven't changed what it produces." },
+          { label: "Redesign the visual architecture around the three decisions the board needs to make. Build a template that makes this structure repeatable every quarter.", type: "new", consequence: "The board pack becomes a decision document. Every chart exists in service of one of the three decisions. The CFO doesn't give the feedback next quarter because the format has changed — not just the length." }
+        ]
+      },
+      "storytelling-analyst": {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The CoE has produced a technically excellent quarter-end analysis. The CFO wants it in the board pack. In its current form, a board member would need 30 minutes and a statistics background to read it.",
+        prompt: "How do you adapt the CoE analysis for the board?",
+        options: [
+          { label: "Add an executive summary. Highlight the key findings at the top. Keep the full analysis as an appendix.", type: "old", consequence: "The executive summary is still data-led. It lists findings without framing decisions. Board members read the summary, skip the appendix, and arrive at the meeting without a clear point of view on what to do." },
+          { label: "Rebuild it for the audience. One chart. One so-what. One recommended next step. Full analysis in the appendix for those who want it.", type: "new", consequence: "Board members arrive at the meeting having already formed a view. The discussion starts at 'what do we do' rather than 'what does this mean.' The CoE's analytical work drove the conversation instead of just informing it." }
+        ]
+      },
+      "sr-fbp": {
         involvement: "today-only",
-        involvementNote: "In the reimagined org, BU commentary for the board pack is generated automatically from live actuals and reviewed by the FBP — not drafted from scratch each quarter. The role shifts from author to editor to strategist.",
-        scenarioContext: "Today, writing the BU section of the board pack takes two full days every quarter. You pull data from four systems, format it to the template, and draft commentary that is mostly descriptive.",
-        prompt: "Your BU's board section needs to be drafted for this quarter.",
+        involvementNote: "In the CoE + BU Pod model, BU commentary for the board pack is generated automatically from live actuals and reviewed by the Sr. FBP — not written from scratch each quarter. The role shifts from author to editor to strategist, spending time on the 20% that requires judgment rather than the 80% that doesn't.",
+        scenarioContext: "Your BU's board pack section needs to be drafted this quarter. Today it takes two full days — pulling data from four systems, formatting to the template, and writing descriptive commentary.",
+        prompt: "How do you produce your BU's board pack section?",
         options: [
-          { label: "Write the commentary from scratch. Pull the data. Format to the template. Submit.", type: "old", consequence: "Two days of production work. Half of it is data description that could have been auto-generated. You're a formatting service, not a strategic voice in the board narrative." },
-          { label: "Review and sharpen the AI-generated commentary. Add the context and strategic framing only you have. Submit in two hours.", type: "new", consequence: "The section is better than anything written from scratch in two days. You've spent your time on the 20% that required judgment — not the 80% that didn't." }
+          { label: "Write the commentary from scratch. Pull the data. Format to the template. Submit.", type: "old", consequence: "Two days of production work. Half of it is data description that could have been auto-generated. The strategic context you actually bring — BU-specific nuance the board needs — gets added in the final 30 minutes when you're out of time." },
+          { label: "Review and sharpen the CoE-generated commentary. Add the strategic context and forward-looking framing only you have. Submit in two hours.", type: "new", consequence: "The section is more insightful than anything produced from scratch in two days. The board gets the data description automatically and the strategic framing from you. You've spent your time on what only you can provide." }
         ]
       },
-      analyst: {
+      "fpa-analyst": {
         involvement: "both",
         involvementNote: null,
         scenarioContext: "The CFO wants a sensitivity analysis on three strategic scenarios for the board meeting: base case, macro headwind, and accelerated investment. You have three days.",
         prompt: "How do you build the sensitivity analysis?",
         options: [
-          { label: "Build three separate models. Run the scenarios. Compile the outputs into a single comparison table.", type: "old", consequence: "Three days of model building. They aren't fully linked. One scenario has an error the CFO catches in the pre-read. Trust in the numbers takes a hit at the worst moment." },
-          { label: "Configure the AI scenario engine. Define the variables, stress-test the logic, own the interpretation.", type: "new", consequence: "Three scenarios modelled in an afternoon. You spend the remaining time on what they mean — and walk into the CFO review with a recommendation, not just a table." }
+          { label: "Build three separate models. Run the scenarios. Compile the outputs into a comparison table.", type: "old", consequence: "Three days of model building. The models aren't fully linked. One scenario has an error the CFO catches in the pre-read. Trust in the numbers takes a hit at the worst moment." },
+          { label: "Configure the CoE scenario engine. Define the key variables. Own the interpretation — not the model mechanics.", type: "new", consequence: "Three scenarios modeled in an afternoon. You spend the remaining time on what they mean — and walk into the CFO review with a recommendation, not just a table." }
         ]
       },
-      datareporting: {
+      "data-analyst": {
         involvement: "both",
         involvementNote: null,
-        scenarioContext: "You build the board pack — 90 pages, every quarter, on a tight deadline. It's the most visible thing finance produces. And the CFO has just said it's not working.",
-        prompt: "The CFO says the pack has too much data and not enough insight. Again. How do you respond?",
+        scenarioContext: "The BU head wants the board pack's BU section to include a customer-level breakdown that isn't in the standard dashboard. Two days to deliver it.",
+        prompt: "How do you add the customer-level view to the board pack section?",
         options: [
-          { label: "Cut 20 pages. Simplify the charts. Submit a cleaner version of the same structure.", type: "old", consequence: "Shorter data is still data. The CFO gives the same feedback next quarter. You've optimised the production — you haven't changed what it produces." },
-          { label: "Rebuild the pack around the three decisions the board needs to make. Every chart earns its place. AI handles the data — you handle the story.", type: "new", consequence: "The board pack becomes a decision document. The CFO shares it as a best-practice example internally. You've changed the format and the function of the role — not just the page count." }
-        ]
-      },
-      operator: {
-        involvement: "future-only",
-        involvementNote: "Today the board pack relies on manual data pulls from multiple systems, at least two of which have known quality issues that get worked around every quarter. In the reimagined org, you've eliminated the pulls and the risk.",
-        scenarioContext: "You maintain the data pipelines that feed the board pack automatically. One core feed has been producing inconsistent outputs for two months. Everyone knows about it. Nobody has fixed it.",
-        prompt: "A data feed for the board pack has had a known quality issue for two months.",
-        options: [
-          { label: "Log it as a known issue. Work around it manually each month. Note it in the commentary.", type: "old", consequence: "The workaround becomes permanent. Everyone knows the number is approximate but the pack goes out anyway. Trust in the data erodes quietly until a board member questions a figure in the room." },
-          { label: "Trace the root cause. Fix the pipeline. Document the fix and add a monitoring alert so it can't quietly drift again.", type: "new", consequence: "The issue is resolved permanently. The board pack is clean. You've removed a recurring risk that nobody was formally accountable for — and that was one bad quarter away from a governance problem." }
+          { label: "Build the customer analysis in Excel from a raw CRM export. Reconcile it with the board pack numbers manually.", type: "old", consequence: "The analysis takes two days. The base numbers don't reconcile with the board pack because the extraction logic differs slightly. The Sr. FBP spends an hour explaining the discrepancy to the BU head. The customer view gets cut from the final pack." },
+          { label: "Use the CoE self-service layer to build the customer-level cut from the governed dataset. It matches the board pack numbers automatically.", type: "new", consequence: "The customer breakdown is ready in two hours and aligns exactly with every other number in the pack. The Sr. FBP adds the strategic framing. The view makes it into the final board pack — because there's nothing to reconcile." }
         ]
       }
     }
@@ -715,67 +1033,117 @@ const ORG_SCENARIOS = [
     id: "product-launch",
     icon: "◆",
     title: "New Product Launch Evaluation",
-    subtitle: "The business wants to move fast. Finance needs to give them a reason to — or a reason not to.",
-    description: "A high-stakes, time-compressed decision that touches every layer of the finance org. See who leads, who enables, and whose role barely exists until now.",
+    subtitle: "The business wants to move fast. The CoE and BU Pods need to give them a reason to — or a reason not to.",
+    description: "A high-stakes, time-compressed decision that touches every layer of the org. See who leads, who enables, and whose role barely existed until the CoE was built.",
     roles: {
-      cfo: {
+      "sr-director": {
         involvement: "both",
         involvementNote: null,
-        scenarioContext: "The CEO wants a go/no-go recommendation on a new product line. 10 days. Significant capital implications. The business is confident. You haven't seen the numbers yet.",
-        prompt: "How do you approach the evaluation?",
+        scenarioContext: "The CEO wants a go/no-go on a new product line. 10 days. The CoE has the scenario modeling capability to shape this evaluation from day one — but nobody has thought to involve them yet.",
+        prompt: "How does the CoE contribute to the product launch evaluation?",
         options: [
-          { label: "Mobilise the team. Pull comps. Start building the model. Coordinate with the business and external advisors.", type: "old", consequence: "Day 10 you have a financial model. The strategic thesis was shaped without finance in the room early enough. You're a scorekeeper who arrived late — not a partner who shaped the decision." },
-          { label: "Deploy AI scenario modeling in hour one. Spend the 10 days stress-testing the strategic thesis with the CEO — not building the spreadsheet.", type: "new", consequence: "Finance shapes the deal logic from day one. You identify a structural risk the business hadn't modelled. The board sees the CFO as the person who makes decisions sharper, not just the person who prices them." }
+          { label: "Wait for the FP&A team to request analytics support. Evaluations are finance decisions — the CoE provides data on request.", type: "old", consequence: "The CoE gets involved on day 7. The strategic thesis has already formed. You're asked to model three scenarios that prove the thesis rather than test it. The CoE's contribution is window dressing on a decision already made." },
+          { label: "Proactively offer the scenario modeling capability. Get into the evaluation on day one — before the thesis calcifies.", type: "new", consequence: "The CoE shapes the evaluation framework from the start: what are the key assumptions, what does 'working' look like, what signals would change the recommendation? The final go/no-go is better because the questions were better." }
         ]
       },
-      corpfpa: {
-        involvement: "both",
-        involvementNote: null,
-        scenarioContext: "The new product launch will require significant capital reallocation across the existing portfolio. Three other investment commitments are in flight. Nobody has flagged the portfolio-level conflict yet.",
-        prompt: "How do you assess the portfolio impact?",
+      "product-owner": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, each finance and analytics team member on a product launch evaluation built their own model independently. Duplicated effort, inconsistent outputs, and no one coordinating the analytical work.",
+        scenarioContext: "The FP&A Analyst, the Sr. FBP, and the Sr. Director's team are all requesting analytics support for the launch evaluation simultaneously. The requests overlap but nobody knows it.",
+        prompt: "How do you coordinate the CoE's analytics support for the product launch?",
         options: [
-          { label: "Run the standard capital allocation model. Flag the reallocation in the next planning cycle review.", type: "old", consequence: "By the time the reallocation shows up in the plan, two other investments have already been committed. The portfolio is over-allocated. The CFO is managing a problem that could have been avoided." },
-          { label: "Run the AI portfolio model in real time. Show exactly what this launch displaces and what the true opportunity cost is — before the decision is made.", type: "new", consequence: "The capital conversation happens before the commitment, not after. The portfolio stays balanced. Finance is in the room when the decision is made — not explaining the consequences after the fact." }
+          { label: "Assign each request to whoever is available. Build three separate analyses for three separate audiences.", type: "old", consequence: "Three analyses are delivered with slightly different assumptions. The Sr. Director's scenario model contradicts the FP&A Analyst's sensitivity analysis on margin. The CFO asks which one to use. The evaluation loses credibility at the moment it matters most." },
+          { label: "Map the requests. Identify the shared core model. Build one version with audience-specific interpretation layers on top.", type: "new", consequence: "One model. Three audiences. Every role in the evaluation works from the same assumptions. When the business changes a pricing input, it updates everywhere simultaneously. The evaluation is coherent because the CoE made it coherent." }
         ]
       },
-      fbp: {
+      "data-scientist": {
         involvement: "both",
         involvementNote: null,
-        scenarioContext: "Your BU head wants to launch. They're confident on the commercial side. You have 48 hours to produce a credible business case before the CFO review.",
-        prompt: "How do you approach the 48-hour ask?",
+        scenarioContext: "The product launch needs a demand forecast across three market scenarios. The business has 18 months of sales data on adjacent products — and high confidence in their commercial assumptions.",
+        prompt: "How do you build the demand forecast for the launch?",
         options: [
-          { label: "Build a standard 3-statement model. Pull comps manually. Produce a financial summary.", type: "old", consequence: "48 hours produces a skeleton model with untested assumptions. The BU head senses you're not really in the business. Finance is a compliance step, not a decision partner." },
-          { label: "Use AI to generate base case financials instantly. Spend the 48 hours stress-testing assumptions with the business. Deliver a recommendation with conviction.", type: "new", consequence: "You deliver a fully scenario-tested business case with a clear go/no-go recommendation. Not just numbers — a decision with a point of view. Finance earns its seat at the strategy table." }
+          { label: "Use adjacent product sales as a proxy. Build a simple extrapolation with three manually adjusted scenarios.", type: "old", consequence: "The extrapolation doesn't account for pricing elasticity differences between the adjacent product and the new one. The base case is 40% optimistic. The business doesn't find out until month 4 post-launch — after significant capital has been deployed." },
+          { label: "Build a demand model with identified drivers: pricing elasticity, market adjacency, and adoption curve assumptions. Produce probability-weighted scenarios with explicit confidence intervals.", type: "new", consequence: "The model surfaces that the business's commercial assumptions are plausible but sit in the top quartile of historical analogues. The CFO approves the launch with a staged capital commitment tied to hitting month-3 adoption targets. The risk is managed — not ignored." }
         ]
       },
-      analyst: {
+      "data-engineer": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, every product launch evaluation required analysts to pull data from multiple systems and join it manually. Every evaluation started from scratch. By the time the data was ready, half the evaluation window was gone.",
+        scenarioContext: "The launch evaluation requires customer behavior data from three source systems that have never been formally joined. The FP&A Analyst needs it in 24 hours.",
+        prompt: "How do you make the customer behavior data available for the evaluation?",
+        options: [
+          { label: "Provide the join logic in a shared document. Each analyst pulls from the relevant system and applies the logic themselves.", type: "old", consequence: "Each analyst interprets the join logic slightly differently. The FP&A Analyst and the Data Analyst produce customer counts that differ by 8%. Neither is wrong — but the Sr. FBP now has to explain the discrepancy to the BU head before the evaluation can proceed." },
+          { label: "Build the joined dataset in the curated data layer. One clean, versioned source that every analyst works from. Document the logic for reuse.", type: "new", consequence: "The joined dataset is live in four hours. Every analyst in the evaluation works from identical customer data. The join logic is reusable for every future product evaluation. This is the infrastructure investment that pays back across every subsequent launch." }
+        ]
+      },
+      "mlops-engineer": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, evaluation models were run once and the outputs were pasted into slides. When assumptions changed mid-evaluation — which they always did — analysts rebuilt their models manually.",
+        scenarioContext: "The pricing assumptions in the demand forecast change twice during the 10-day evaluation as the business refines its commercial model.",
+        prompt: "How do you manage model updates during a live evaluation?",
+        options: [
+          { label: "Manually re-run the model each time assumptions change. Distribute updated outputs via email.", type: "old", consequence: "By the second pricing change, three versions of the output deck are circulating. The CFO's team is working from version 1. The Sr. FBP is working from version 3. The go/no-go meeting starts with 20 minutes of version reconciliation." },
+          { label: "Set up an automated refresh pipeline. When assumptions change, the model re-runs and outputs update in the shared working environment.", type: "new", consequence: "Both pricing changes propagate to every output automatically. Every stakeholder always has the current version. The go/no-go meeting starts with the decision — not with data reconciliation." }
+        ]
+      },
+      "model-governance": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, product launch evaluation models had no documentation. If the launch underperformed, there was no way to audit whether the model was wrong, the inputs were wrong, or the assumptions were correct but the market moved.",
+        scenarioContext: "Post-launch, the CFO wants to be able to audit the assumptions that drove the go/no-go recommendation if actuals diverge significantly from the forecast.",
+        prompt: "How do you ensure the launch evaluation model is auditable after the decision is made?",
+        options: [
+          { label: "Keep the final model version and a summary of key assumptions in a shared folder.", type: "old", consequence: "Six months post-launch, actuals are tracking 30% below forecast. The CFO asks to review the evaluation assumptions. The shared folder has three model versions with no version notes and assumption summaries that don't match any of them. The audit is inconclusive." },
+          { label: "Document the model at the time of evaluation: assumptions, data sources, sensitivity ranges, and the explicit basis for the go/no-go recommendation.", type: "new", consequence: "When actuals diverge, the audit trail shows exactly what was assumed and why. The divergence is traced to a market entry timing assumption that was explicitly flagged as the highest-risk input. The evaluation was sound — the market moved. That's a very different conversation than 'we don't know why the model was wrong.'" }
+        ]
+      },
+      "viz-architect": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, each team in a product launch evaluation built their own charts. The same underlying data appeared in three different formats with three different metric definitions — and the CFO was reconciling them in the meeting.",
+        scenarioContext: "The launch evaluation deck has been assembled by three different teams. Slides 4, 11, and 19 all show the same demand metric — visualized three different ways, with slightly different numbers.",
+        prompt: "How do you fix the visualization consistency problem mid-evaluation?",
+        options: [
+          { label: "Pick the 'best' version of each chart. Rebuild the others to match the formatting. Note the metric alignment issue for post-evaluation cleanup.", type: "old", consequence: "The reformatted charts still have slightly different underlying numbers because the metric definitions weren't unified — only the formatting was. The CFO still asks why slide 4 and slide 19 show different demand figures for the same scenario." },
+          { label: "Apply certified metric definitions from the semantic layer retroactively. Rebuild all three from the same governed source.", type: "new", consequence: "All three charts now show the same number because they're drawing from the same definition. The CFO's question doesn't arise. The evaluation deck is coherent — because the data layer is coherent." }
+        ]
+      },
+      "storytelling-analyst": {
+        involvement: "future-only",
+        involvementNote: "Before the CoE, product launch evaluation outputs were financial models and data summaries. Nobody converted them into a decision narrative before they reached the CEO. The evaluation was technically strong and communicatively weak.",
+        scenarioContext: "The 10-day evaluation is complete. The CoE and BU Pod teams have produced excellent analysis. The CEO presentation is in two hours. The deck is 35 slides of models, charts, and assumptions — and nobody has turned it into a story.",
+        prompt: "How do you prepare the CEO presentation?",
+        options: [
+          { label: "Compile the best charts from the evaluation. Add titles. Present the analysis in the order it was produced.", type: "old", consequence: "The CEO works through 35 slides trying to locate the recommendation. They ask what the team thinks they should do. Nobody has a clear answer because the deck was built to inform, not to decide. The go/no-go is deferred." },
+          { label: "Identify the one decision and the three things the CEO needs to believe to make it. Build the narrative backward from that. Every chart earns its place.", type: "new", consequence: "The CEO presentation is 8 slides. The recommendation is on slide 2. The three belief conditions are slides 3–5. The risk mitigation is slide 6. The decision is made in the meeting. The CoE's 10 days of analytical work led to a decision — not a deferral." }
+        ]
+      },
+      "sr-fbp": {
         involvement: "both",
         involvementNote: null,
-        scenarioContext: "The product launch needs three financial scenarios modelled before the CFO review: base case, optimistic, and downside. The FBP needs them by end of day tomorrow.",
+        scenarioContext: "Your BU head wants to launch. The commercial team is confident. You have 48 hours to produce a credible business case before the CFO review.",
+        prompt: "How do you approach the 48-hour business case?",
+        options: [
+          { label: "Build a standard financial model. Pull comps manually. Produce a financial summary.", type: "old", consequence: "48 hours produces a skeleton model with untested assumptions. The BU head senses you're not really in the business. Finance is a compliance step — present at the table, absent from the decision." },
+          { label: "Commission the CoE scenario model immediately. Spend the 48 hours with the BU head stress-testing the commercial assumptions — not building the financial structure.", type: "new", consequence: "You deliver a scenario-tested business case with a clear go/no-go recommendation. The CoE built the model. You built the conviction. Finance earns its seat at the strategy table." }
+        ]
+      },
+      "fpa-analyst": {
+        involvement: "both",
+        involvementNote: null,
+        scenarioContext: "The product launch needs three financial scenarios modelled before the CFO review: base case, optimistic, and downside. The Sr. FBP needs them by end of day tomorrow.",
         prompt: "How do you build the scenario analysis?",
         options: [
-          { label: "Build each scenario as a separate model. Link the key drivers manually. Compile the comparison outputs.", type: "old", consequence: "It takes two full days. The models drift apart by the third revision. When the BU changes a pricing assumption, you update each model separately. Something slips." },
-          { label: "Build one connected scenario engine. Define the key variables. Run all three scenarios while you focus on the interpretation.", type: "new", consequence: "Three scenarios are live in an afternoon. When the BU changes a pricing assumption, all three update instantly. You spend your time on what it means — not on rebuilding the same model three times." }
+          { label: "Build each scenario as a separate model. Link the key drivers manually. Compile the comparison.", type: "old", consequence: "It takes two full days. The models drift apart by the third revision. When the BU changes a pricing assumption, you update each model separately. Something slips — and the CFO finds it in the review." },
+          { label: "Build one connected scenario engine using the CoE's modeling infrastructure. Define the variables. Run all three while you focus on what they mean.", type: "new", consequence: "Three scenarios are live in an afternoon. When the BU changes a pricing assumption, all three update instantly. You spend your time on the interpretation — and walk into the CFO review with a recommendation, not just outputs." }
         ]
       },
-      datareporting: {
+      "data-analyst": {
         involvement: "future-only",
-        involvementNote: "In today's org, this role isn't meaningfully involved in a product launch evaluation. In the reimagined org, the Insight Designer builds the KPI framework that determines whether the launch actually works — before it launches.",
-        scenarioContext: "The launch has been approved. In the AI-native org, your role isn't reporting after the fact — it's designing the measurement framework before launch so the right signals are tracked from day one.",
-        prompt: "The product launch is approved. Finance needs to track its performance.",
+        involvementNote: "In today's org, post-launch tracking is an afterthought — a monthly report added to the production schedule after approval. In the CoE + BU Pod model, the measurement framework is designed before launch so the right signals are tracked from day one.",
+        scenarioContext: "The launch has been approved. The BU Pod needs a performance tracking framework that tells the team whether the launch is working — not just whether it hit revenue targets.",
+        prompt: "How do you set up launch performance tracking?",
         options: [
-          { label: "Set up a standard monthly reporting dashboard using the existing revenue and margin metrics.", type: "old", consequence: "Month 3, the dashboard shows the product hitting revenue targets. Nobody notices it's destroying margin on a key customer segment. The metrics tracked the wrong things." },
-          { label: "Design the KPI framework before launch. Define what 'working' means across revenue, margin, and customer behaviour. Build the AI alert layer on top.", type: "new", consequence: "When a pricing issue appears in month 2, the alert fires before it compounds. Finance catches it while it's still correctable. The KPI framework becomes the source of truth for the entire launch team." }
-        ]
-      },
-      operator: {
-        involvement: "future-only",
-        involvementNote: "This role doesn't exist in today's product launch evaluation — so each analyst builds their own model in isolation and the outputs are compared manually. In the reimagined org, you make the entire evaluation possible at speed.",
-        scenarioContext: "The FBP, the analyst, and the CFO are all running scenarios for the evaluation. In the AI-native org, they're all working from the same central model — which you built, maintain, and keep aligned with the latest business inputs.",
-        prompt: "The business wants to model 5 pricing scenarios before the launch decision.",
-        options: [
-          { label: "Each analyst builds their own version. Outputs are compared manually in a shared spreadsheet.", type: "old", consequence: "Five different models. Three different answers. The CFO asks which one to trust. Nobody is certain. The evaluation loses credibility at the moment it matters most." },
-          { label: "Build one central scenario model with clean, governed inputs. Every role runs their analysis from the same source of truth.", type: "new", consequence: "All five scenarios run in under an hour. Every stakeholder works from identical assumptions. The decision is made with clarity — not in spite of the models, but because of them." }
+          { label: "Set up a standard monthly reporting dashboard using existing revenue and margin metrics.", type: "old", consequence: "Month 3, the dashboard shows the product hitting revenue targets. Nobody notices it's destroying margin on a key customer segment because that metric wasn't tracked. The problem surfaces in month 6 when it's expensive to fix." },
+          { label: "Design the KPI framework before launch. Define what 'working' looks like across revenue, margin, and customer behavior. Work with the Viz Architect to build the alert layer so signals are caught while they're still correctable.", type: "new", consequence: "The margin issue on the key customer segment surfaces in month 2. The Sr. FBP brings it to the BU head before it compounds. The launch is adjusted — not abandoned. The measurement framework is the reason the CoE caught it." }
         ]
       }
     }
@@ -1239,81 +1607,97 @@ function OrgNode({ persona, onSelect, compact = false }) {
 }
 
 function OrgChart({ onSelect }) {
-  const [engHov, setEngHov] = useState(false);
   const byId = id => PERSONAS.find(p => p.id === id);
   const line = "rgba(255,255,255,0.12)";
-  const operator = byId("operator");
+
+  const coeIds = ["sr-director", "product-owner", "data-scientist", "data-engineer", "mlops-engineer", "model-governance", "viz-architect", "storytelling-analyst"];
+  const podIds = ["sr-fbp", "fpa-analyst", "data-analyst"];
 
   return (
     <div style={{ animation: "fadeUp 0.5s ease" }}>
       <div style={{ textAlign: "center", marginBottom: "36px" }}>
-        <div style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", marginBottom: "10px" }}>AI-NATIVE FINANCE ORG</div>
-        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", maxWidth: "500px", margin: "0 auto", lineHeight: "1.75" }}>
-          The hierarchy stays. The roles are fundamentally different. Click any node to explore the transformation.
+        <div style={{ fontSize: "10px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", marginBottom: "10px" }}>AI & ANALYTICS CENTER OF EXCELLENCE</div>
+        <p style={{ fontSize: "13px", color: "rgba(255,255,255,0.38)", maxWidth: "560px", margin: "0 auto", lineHeight: "1.75" }}>
+          Hub & Spoke: the CoE builds shared capabilities, governance, and scalable products. BU Pods stay embedded with the business and turn insights into action. Click any role to explore.
         </p>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        {/* Level 1: CFO */}
-        <div style={{ width: "min(260px, 100%)" }}>
-          <OrgNode persona={byId("cfo")} onSelect={onSelect} />
+      <div style={{ display: "flex", gap: "24px", width: "100%", flexWrap: "wrap" }}>
+        {/* CoE Column */}
+        <div style={{ flex: "1 1 340px", minWidth: "280px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "18px" }}>
+            <div style={{ flex: 1, height: "0", borderTop: "1px solid rgba(255,255,255,0.09)" }} />
+            <span style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", fontWeight: "700", whiteSpace: "nowrap" }}>COE · SHARED CAPABILITIES</span>
+            <div style={{ flex: 1, height: "0", borderTop: "1px solid rgba(255,255,255,0.09)" }} />
+          </div>
+
+          {/* Sr. Director — leader node */}
+          <div style={{ width: "100%", marginBottom: "8px" }}>
+            <OrgNode persona={byId("sr-director")} onSelect={onSelect} />
+          </div>
+
+          {/* Vertical connector */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ width: "1px", height: "16px", background: line }} />
+          </div>
+
+          {/* Core CoE roles */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px", marginBottom: "8px" }}>
+            {["product-owner", "data-scientist", "data-engineer", "mlops-engineer", "model-governance"].map(id => (
+              <OrgNode key={id} persona={byId(id)} onSelect={onSelect} compact />
+            ))}
+          </div>
+
+          {/* BI & Viz Team sub-section */}
+          <div style={{ margin: "14px 0 8px", display: "flex", alignItems: "center", gap: "10px" }}>
+            <div style={{ flex: 1, height: "0", borderTop: "1px dashed rgba(255,255,255,0.07)" }} />
+            <span style={{ fontSize: "8px", letterSpacing: "1.5px", color: "rgba(255,255,255,0.18)", fontWeight: "700", whiteSpace: "nowrap" }}>BI & VISUALIZATION</span>
+            <div style={{ flex: 1, height: "0", borderTop: "1px dashed rgba(255,255,255,0.07)" }} />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "8px" }}>
+            {["viz-architect", "storytelling-analyst"].map(id => (
+              <OrgNode key={id} persona={byId(id)} onSelect={onSelect} compact />
+            ))}
+          </div>
         </div>
 
-        {/* Vertical connector: CFO → Corp FP&A */}
-        <div style={{ width: "1px", height: "24px", background: line }} />
+        {/* BU Pod Column */}
+        <div style={{ flex: "0 1 260px", minWidth: "220px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "18px" }}>
+            <div style={{ flex: 1, height: "0", borderTop: "1px solid rgba(255,255,255,0.09)" }} />
+            <span style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,0.28)", fontWeight: "700", whiteSpace: "nowrap" }}>BU POD · EMBEDDED</span>
+            <div style={{ flex: 1, height: "0", borderTop: "1px solid rgba(255,255,255,0.09)" }} />
+          </div>
 
-        {/* Level 2: Corp FP&A */}
-        <div style={{ width: "min(260px, 100%)" }}>
-          <OrgNode persona={byId("corpfpa")} onSelect={onSelect} />
-        </div>
+          {/* Sr. FBP — pod lead */}
+          <div style={{ width: "100%", marginBottom: "8px" }}>
+            <OrgNode persona={byId("sr-fbp")} onSelect={onSelect} />
+          </div>
 
-        {/* Branch connector: Corp FP&A → 3 children */}
-        <div style={{ width: "100%", position: "relative", height: "42px" }}>
-          <div style={{ position: "absolute", left: "50%", top: 0, width: "1px", height: "20px", background: line, transform: "translateX(-50%)" }} />
-          <div style={{ position: "absolute", left: "16.7%", right: "16.7%", top: "20px", height: "1px", background: line }} />
-          {[16.7, 50, 83.3].map(pct => (
-            <div key={pct} style={{ position: "absolute", left: `${pct}%`, top: "20px", width: "1px", height: "22px", background: line, transform: "translateX(-50%)" }} />
-          ))}
-        </div>
+          {/* Vertical connector */}
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div style={{ width: "1px", height: "16px", background: line }} />
+          </div>
 
-        {/* Level 3: FBP, Analyst, Data & Reporting */}
-        <div style={{ display: "flex", gap: "12px", width: "100%" }}>
-          {["fbp", "analyst", "datareporting"].map(id => (
-            <div key={id} style={{ flex: 1 }}>
-              <OrgNode persona={byId(id)} onSelect={onSelect} compact />
+          {/* Pod team roles */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+            {["fpa-analyst", "data-analyst"].map(id => (
+              <OrgNode key={id} persona={byId(id)} onSelect={onSelect} compact />
+            ))}
+          </div>
+
+          {/* Operating model note */}
+          <div style={{
+            marginTop: "20px", padding: "14px 16px", borderRadius: "10px",
+            background: "rgba(255,255,255,0.02)", border: "1px dashed rgba(255,255,255,0.07)"
+          }}>
+            <div style={{ fontSize: "8px", letterSpacing: "1.5px", color: "rgba(255,255,255,0.22)", fontWeight: "700", marginBottom: "8px" }}>OPERATING MODEL</div>
+            <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.30)", lineHeight: "1.65" }}>
+              CoE owns tools, models & governance. BU Pods own business insight & action. One pod per business unit — embedded, not centralized.
             </div>
-          ))}
+          </div>
         </div>
-      </div>
-
-      {/* AI Infrastructure divider */}
-      <div style={{ margin: "40px 0 22px", display: "flex", alignItems: "center", gap: "14px" }}>
-        <div style={{ flex: 1, height: "0", borderTop: "1px dashed rgba(255,255,255,0.09)" }} />
-        <span style={{ fontSize: "9px", letterSpacing: "2px", color: "rgba(255,255,255,0.22)", fontWeight: "700", whiteSpace: "nowrap" }}>AI INFRASTRUCTURE LAYER</span>
-        <div style={{ flex: 1, height: "0", borderTop: "1px dashed rgba(255,255,255,0.09)" }} />
-      </div>
-
-      {/* Finance AI Engineer: platform role */}
-      <div
-        onClick={() => onSelect(operator)}
-        onMouseEnter={() => setEngHov(true)}
-        onMouseLeave={() => setEngHov(false)}
-        style={{
-          cursor: "pointer", borderRadius: "12px", padding: "18px 22px",
-          background: engHov ? `${operator.color}18` : `${operator.color}0a`,
-          border: `1px solid ${engHov ? operator.color + "50" : operator.color + "25"}`,
-          display: "flex", alignItems: "center", gap: "18px",
-          transition: "all 0.22s", position: "relative", overflow: "hidden"
-        }}
-      >
-        <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: "2px", background: engHov ? operator.color : "transparent", transition: "all 0.22s" }} />
-        <div style={{ fontSize: "28px", color: operator.color, flexShrink: 0 }}>{operator.icon}</div>
-        <div style={{ flex: 1 }}>
-          <div style={{ fontSize: "8px", letterSpacing: "1.5px", color: operator.tagColor, marginBottom: "4px", fontWeight: "700" }}>NEW ROLE · POWERS ALL OF THE ABOVE</div>
-          <div style={{ fontFamily: "'Playfair Display', serif", fontSize: "16px", color: "#fff", marginBottom: "3px" }}>{operator.futureTitle}</div>
-          <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", lineHeight: "1.5" }}>{operator.futureHook}</div>
-        </div>
-        <div style={{ fontSize: "10px", color: engHov ? operator.color : "rgba(255,255,255,0.22)", transition: "color 0.22s", letterSpacing: "0.5px", flexShrink: 0 }}>PLAY ROLE →</div>
       </div>
     </div>
   );
