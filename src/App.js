@@ -1610,9 +1610,6 @@ function OrgChart({ onSelect }) {
   const byId = id => PERSONAS.find(p => p.id === id);
   const line = "rgba(255,255,255,0.12)";
 
-  const coeIds = ["sr-director", "product-owner", "data-scientist", "data-engineer", "mlops-engineer", "model-governance", "viz-architect", "storytelling-analyst"];
-  const podIds = ["sr-fbp", "fpa-analyst", "data-analyst"];
-
   return (
     <div style={{ animation: "fadeUp 0.5s ease" }}>
       <div style={{ textAlign: "center", marginBottom: "36px" }}>
