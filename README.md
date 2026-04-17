@@ -2,7 +2,7 @@
 
 **[Live Demo →](https://fpa-reimagined.vercel.app)**
 
-An interactive React demo built for internal change management. The goal is to shift colleagues away from thinking about AI as a chatbot bolted onto existing processes, toward completely reimagining workflows, org structures, and the skills and responsibilities that define each finance role.
+An interactive React demo built for internal change management. The goal is to shift colleagues away from thinking about AI as a chatbot bolted onto existing processes, toward completely reimagining workflows, org structures, and the skills and responsibilities that define each role — through the lens of an AI & Analytics Center of Excellence with embedded BU Pods.
 
 ---
 
@@ -10,56 +10,70 @@ An interactive React demo built for internal change management. The goal is to s
 
 Most AI adoption in finance stalls at the tool layer. Teams add a chatbot to their existing workflow, automate a report, or buy a forecasting plugin — and call it transformation. The mental model stays the same: finance as a reporting function, analysts as data wranglers, business partners as translators.
 
-This demo makes the case that the shift is not about tools. It's about what the role is actually for.
+This demo makes the case that the shift is not about tools. It's about what the role is actually for — and how a hub-and-spoke operating model (CoE + BU Pods) changes who builds, who governs, and who turns insight into action.
 
-By putting colleagues in the seat of each finance persona and forcing a choice between the old playbook and the AI-native move, the demo makes the mindset gap visible. Not as a slide. As a lived experience.
+By putting colleagues in the seat of each role and forcing a choice between the old playbook and the AI-native move, the demo makes the mindset gap visible. Not as a slide. As a lived experience.
 
 ---
 
 ## How It Works
 
-The app has three ways to explore the reimagined finance org:
+The app has three ways to explore the reimagined org:
 
 ### Play a Role
-Pick one of six personas and walk through three sequential decisions in a realistic scenario. Each decision presents two options — one rooted in how the role has always worked, one in how it needs to work. After each choice, a consequence reveals what that decision produces in practice. At the end, you receive a completion grade (Stuck / Resistant / Transitioning / AI-Native), a role transformation diagram, an animated before/after time allocation breakdown, and a full skill profile shift.
+Pick one of eleven roles and walk through three sequential decisions in a realistic scenario. Each decision presents two options — one rooted in how the role has always worked, one in how it needs to work. After each choice, a consequence reveals what that decision produces in practice. At the end, you receive a completion grade (Stuck / Resistant / Transitioning / AI-Native), a role transformation diagram, an animated before/after time allocation breakdown, and a full skill profile shift.
 
 ### The Org Journey
-Walk the entire finance org in sequence — one role at a time. For each role, you first see a full overview: the role's responsibilities, what flows in, what it produces, and how the role is changing. Then you face the decision. After all six roles, you see an org-level outcome showing how the cumulative choices reflect the readiness of the whole organisation, not just one function.
+Walk the entire org in sequence — one role at a time across three cross-functional scenarios (Annual Planning Cycle, Quarterly Board Pack, New Product Launch Evaluation). For each role, you first see a full overview: the role's responsibilities, what flows in, what it produces, and how the role is changing. Then you face the decision. After all eleven roles, you see an org-level outcome showing how the cumulative choices reflect the readiness of the whole organisation, not just one function.
 
 ### Explore the Org
-- **Org Chart** — A visual hierarchy of the AI-native finance org, from CFO down through Corp FP&A, into the business-facing and analytical roles, with the Finance AI Engineer shown as a horizontal infrastructure layer that powers all of them. Every node is clickable.
-- **All Roles** — A side-by-side summary of all six personas. Each card shows the role transformation, an interactive time allocation toggle (TODAY vs AI), and the fading and emerging skill sets.
+- **Org Chart** — A two-column visual of the AI & Analytics CoE (Sr. Director → core roles → BI & Viz team) and the embedded BU Pod (Sr. FBP → FP&A Analyst + Data Analyst). Every node is clickable.
+- **All Roles** — A side-by-side summary of all eleven roles. Each card shows the role transformation, an interactive time allocation toggle (TODAY vs AI), and the fading and emerging skill sets.
 
 ---
 
-## The Six Personas
+## The Org Structure
 
-| Current Title | Reimagined Title | Status |
-|---|---|---|
-| FP&A Analyst | Strategic Finance Partner | Evolving |
-| Finance AI Engineer | Finance AI Engineer | Net new role |
-| Finance Business Partner | Embedded Strategy Advisor | Evolving |
-| Corp FP&A Lead | AI Portfolio Orchestrator | Evolving |
-| Data & Reporting Analyst | Insight Designer | Merging / Evolving |
-| CFO | Chief Intelligence Officer | Transforming |
+### CoE — Shared Capabilities (8 roles)
 
-### FP&A Analyst → Strategic Finance Partner
-Spends 70% of the week gathering data. Rarely has time to think. In the reimagined role, AI handles the gathering — the analyst owns the thinking, the story, and the recommendation. The scenario: Q3 forecast due Friday, revenue tracking 8% below plan, leadership wants answers.
+| Role | Focus |
+|---|---|
+| Sr. Director, Analytics | CoE strategy, roadmap, standards, adoption |
+| Product Owner | Use case discovery, backlog management, business-to-technical translation |
+| Data Scientist | ML/statistical models, driver analysis, predictive/prescriptive insight |
+| Data Engineer | Data pipelines, curated datasets, reusable data models |
+| ML Ops Engineer | Model deployment, monitoring, automation, production reliability |
+| Model Governance | Controls, documentation, validation, risk management for AI/ML |
+| Viz Architect *(BI & Viz)* | Semantic layers, dashboard standards, self-service reporting |
+| Storytelling Analyst *(BI & Viz)* | Insight-to-narrative conversion, executive-ready materials |
 
-### Finance AI Engineer *(net new)*
-This role doesn't exist at most companies yet. It will be one of the most critical hires in finance. Owns the AI infrastructure powering the entire function — models, pipelines, governance, and the translation layer between finance logic and technical implementation. The scenario: the rolling forecast model is drifting, and nobody knows why.
+### BU Pod — Embedded per Business Unit (3 roles)
 
-### Finance Business Partner → Embedded Strategy Advisor
-Caught between finance requests and business demands — a translator without authority. In the reimagined role, AI generates the analysis and the FBP generates the direction. The scenario: the business unit wants to launch a new product line and needs a finance view in 48 hours.
+| Role | Focus |
+|---|---|
+| Senior Finance Business Partner | BU leadership relationship, business question framing, performance management |
+| FP&A Analyst | Budgeting, forecasting, variance analysis, decision support |
+| Data Analyst | Ad hoc analysis, CoE dashboard interpretation in BU context |
 
-### Corp FP&A Lead → AI Portfolio Orchestrator
-Currently a consolidation factory — spending the quarter collecting, cleaning, and correcting BU submissions. In the reimagined role, the focus shifts to designing the planning system itself: the logic, the models, the governance, and the challenge function. The scenario: annual planning cycle kicks off across 12 business units.
+### Accountability Split
 
-### Data & Reporting Analyst → Insight Designer
-A report factory. Builds the same decks every month. Rarely asked what they actually think. The reimagined role is an editorial one — curating AI-generated outputs into clear, decision-ready intelligence, and teaching the business to self-serve. The scenario: the CFO says the monthly board pack has too much data and not enough insight. Again.
+- **CoE owns:** tools, models, governance, scalable analytics products
+- **BU Pods own:** business insight, action, BU-specific context and decision support
 
-### CFO → Chief Intelligence Officer
-Currently the guardian of historical accuracy — trusted for what happened, rarely the first call for what's next. In the reimagined role, the CFO is the architect of the company's decision intelligence: turning AI capability into competitive advantage, and redesigning what it means for finance to lead. The scenario: the board asks whether this company is ready to compete in an AI-native landscape.
+---
+
+## Org Scenarios (Cross-Functional Journeys)
+
+Each scenario walks all 11 roles through the same business situation, showing how CoE and BU Pod roles interact:
+
+1. **Annual Planning Cycle** — 12 BUs, 6 weeks, the process that eats the quarter
+2. **Quarterly Board Pack** — 90 pages, 3 decisions the board needs to make
+3. **New Product Launch Evaluation** — high-stakes, time-compressed go/no-go
+
+Roles are tagged by involvement type:
+- `both` — active in today's org and in the CoE model
+- `future-only` — new CoE capability that didn't exist before
+- `today-only` — work that gets automated or redesigned away
 
 ---
 
@@ -108,4 +122,4 @@ The production build outputs to the `build/` folder as a static site — no back
 - **No routing library** — navigation is managed through component state
 - **Google Fonts** — Playfair Display (headings) and DM Sans (body)
 
-All six personas, their scenarios, decisions, consequences, time allocation data, and skill profiles live in a single `PERSONAS` array in `src/App.js`. Adding or editing a persona means editing that array — no database, no CMS, no API.
+All eleven roles, their scenarios, decisions, consequences, time allocation data, and skill profiles live in `PERSONAS` and `ORG_SCENARIOS` arrays in `src/App.js`. Adding or editing a role means editing those arrays — no database, no CMS, no API.
